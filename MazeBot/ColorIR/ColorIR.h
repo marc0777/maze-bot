@@ -1,5 +1,7 @@
-#ifndef LibLum_h
-#define LibLum_h
+#ifndef ColorIR_h
+#define ColorIR_h
+
+#include <Arduino.h>
 
 #define BLACK 550
 #define MIRROR 250
@@ -7,9 +9,9 @@
 #define R_CIR 14
 #define L_CIR 15
 
-class LibLum{
+class ColorIR{
   public:
-    LibLum();
+    ColorIR();
     int surfaceType(); 
 };
 #endif
