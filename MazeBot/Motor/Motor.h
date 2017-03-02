@@ -10,6 +10,6 @@ class Motor
 		
 		
 	private:
-    int inverter1,inverter2, enable;
+    extern int inverter1,inverter2, enable;
 };
 #endif
