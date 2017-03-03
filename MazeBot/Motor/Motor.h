@@ -10,10 +10,6 @@ class Motor
 		void stop();
 		
 	private:
-<<<<<<< HEAD
     short inverter1,inverter2, enable;
-=======
-    extern int inverter1,inverter2, enable;
->>>>>>> origin/master
 };
 #endif
