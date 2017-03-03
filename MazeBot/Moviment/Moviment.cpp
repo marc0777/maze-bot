@@ -1,5 +1,6 @@
 #include "Moviment.h"
 
+<<<<<<< HEAD
 // defining constant pin for motors
 #define R_EN 4
 #define R_IN1 3
@@ -8,10 +9,13 @@
 #define L_IN1 5
 #define L_IN2 6
 
+=======
+>>>>>>> origin/master
 Moviment::Moviment (int speed, int rightK, int leftK) {
   this->speed = speed;
   kR = rightK;
   kL = leftK;
+<<<<<<< HEAD
   motorR = new Motor(R_EN,R_IN1,R_IN2);
   motorL = new Motor(L_EN,L_IN1,L_IN2);
 }
@@ -29,5 +33,20 @@ void Moviment::rotate(bool invert) {
 void Moviment::stop() {
   motorR->stop();
   motorL->stop();
+=======
+}
+
+void Moviment::go(bool invert) {
+  
+}
+
+void Moviment::rotate(bool invert) {
+  
+}
+
+void Moviment::stop() {
+  motorR.stop();
+  motorL.stop();
+>>>>>>> origin/master
 }
 
