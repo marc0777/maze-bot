@@ -7,9 +7,9 @@
 #define BLACK 550
 #define MIRROR 250
 
-class ColorIR{
+class ColorIR {
   public:
     ColorIR();
-    int surfaceType(); 
+    int surfaceType();
 };
 #endif
