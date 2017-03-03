@@ -4,8 +4,6 @@
 #include <Arduino.h>
 #include "Motor.h"
 
-
-=======
 // defining constant pin for motors
 #define R_EN 4
 #define R_IN1 2
