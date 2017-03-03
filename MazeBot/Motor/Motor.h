@@ -5,11 +5,11 @@
 class Motor
 {
 	public:
-		Motor(int inverter1,int inverter2,int enable);
-		void startMotor(int power);
-		
+		Motor(int e,int i1,int i2);
+		void start(int power, bool inverse);
+		void stop();
 		
 	private:
-    int inverter1,inverter2, enable;
+    short inverter1,inverter2, enable;
 };
 #endif
