@@ -1,6 +1,6 @@
 
-#ifndef _ULTRASONIC_H_
-#define _ULTRASONIC_H_
+#ifndef _Ultrasonic_H_
+#define _Ultrasonic_H_
 
 #include <stddef.h>
 #if defined(ARDUINO) && ARDUINO >= 100
