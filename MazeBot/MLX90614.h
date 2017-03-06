@@ -46,9 +46,9 @@
 #define MLX90614_ID4 0x3F
 
 
-class Temperature  {
+class MLX90614  {
  public:
-  Temperature(uint8_t addr = MLX90614_I2CADDR);
+  MLX90614(uint8_t addr = MLX90614_I2CADDR);
   boolean begin();
   uint32_t readID(void);
 

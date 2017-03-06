@@ -32,19 +32,19 @@ class DistanceIR
             // model: an int that determines your sensor:  1080 for GP2Y0A21Y
             //                                            20150 for GP2Y0A02Y
             //   
-    int distance();
+    float distance();
     
     
   private:
     
-    int cm();
+    float cm();
     
     int _irPin;
     int _model;
     int _avg;
     int _p;
-    int _sum;
-    int _previousDistance;
+    float _sum;
+    float _previousDistance;
     int _tol;
     
 };

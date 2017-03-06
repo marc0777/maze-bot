@@ -38,11 +38,11 @@ DistanceIR::DistanceIR(int irPin, int avg, int tolerance, int sensorModel) {
  
 }
 
-int DistanceIR::cm() {
+float DistanceIR::cm() {
     
     int raw=analogRead(_irPin);
     float voltFromRaw=map(raw, 0, 1023, 0, 5000);   
-    int puntualDistance;    
+    float puntualDistance;    
     if (_model==1080)      
         puntualDistance=27.728*pow(voltFromRaw/1000, -1.2045);
     else if (_model==20150)
@@ -53,19 +53,19 @@ int DistanceIR::cm() {
 
 
 
-int DistanceIR::distance() {
+float DistanceIR::distance() {
     _p=0;
     _sum=0;
      
     for (int i=0; i<_avg; i++){
-        int foo=cm();    
+        float foo=cm();    
         if (foo>=(_tol*_previousDistance)){       
             _previousDistance=foo;
             _sum=_sum+foo;
             _p++;        
         }      
     }  
-    int accurateDistance=_sum/_p;
+    float accurateDistance=_sum/_p;
     
     return accurateDistance;
 }

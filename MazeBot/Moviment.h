@@ -35,6 +35,6 @@ class Moviment {
     short speed;
     short kR;
     short kL;
-    int distanceRead[N_SEN];
+    float distanceRead[N_SEN];
 };
 #endif

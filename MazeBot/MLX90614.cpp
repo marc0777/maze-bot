@@ -16,14 +16,14 @@
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
-#include "Temperature.h"
+#include "MLX90614.h"
 
-Temperature::Temperature(uint8_t i2caddr) {
+MLX90614::MLX90614(uint8_t i2caddr) {
   _addr = i2caddr;
 }
 
 
-boolean Temperature::begin(void) {
+boolean MLX90614::begin(void) {
   Wire.begin();
 
   /*
@@ -36,16 +36,16 @@ boolean Temperature::begin(void) {
 }
 
 //////////////////////////////////////////////////////
-double Temperature::readObj(void) {
+double MLX90614::readObj(void) {
   return readTemp(MLX90614_TOBJ1);
 }
 
 
-double Temperature::readAmb(void) {
+double MLX90614::readAmb(void) {
   return readTemp(MLX90614_TA);
 }
 
-float Temperature::readTemp(uint8_t reg) {
+float MLX90614::readTemp(uint8_t reg) {
   float temp;
   
   temp = read16(reg);
@@ -56,7 +56,7 @@ float Temperature::readTemp(uint8_t reg) {
 
 /*********************************************************************/
 
-uint16_t Temperature::read16(uint8_t a) {
+uint16_t MLX90614::read16(uint8_t a) {
   uint16_t ret;
 
   Wire.beginTransmission(_addr); // start transmission to device 
