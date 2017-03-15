@@ -24,7 +24,7 @@ short start[2] {0, 0};
 
 // 36,38,40,42  8,9,10 per RGB
 
-void uccidiBertoldi(bool dir){
+void vittima(bool dir){
   mov.rotate(dir);
   delay(500);
   mov.stop();
@@ -46,7 +46,7 @@ void uccidiBertoldi(bool dir){
 
 }
 
-void primoVito() {
+void sempreADestra() {
   /*for(int i=0;i<4;i++){
     Serial.println(US[i].read());
   }*/
