@@ -20,21 +20,21 @@
 
 class Moviment {
   public:
-    Moviment (int speed, int rightK, int leftK); 
-    void raddrizzati();
+    Moviment (short speed, short rightK, short leftK); 
     void go (bool invert);
     void rotate (bool invert);
     void stop();
+    void setSpeed(int s);
+    int getSpeed();
+    void rotate(bool invert,short s) ;
+    void setOffset(short rightK,short leftK);
   private:
     Motor *motorR;
     Motor *motorL;
     bool controllo(int d1,int d2);
     
-    DistanceIR *dist[];
-    
     short speed;
     short kR;
     short kL;
-    float distanceRead[N_SEN];
 };
 #endif
