@@ -41,17 +41,14 @@ int tVittima = 0;
 
 // 36,38,40,42  8,9,10 per RGB
 
-<<<<<<< HEAD
 float modulo(float n, float m) {
   while (n > m) {
     n -= m;
   }
   return n;
 }
+
 void rotate(bool dir) {
-=======
-void vittima(bool dir){
->>>>>>> origin/master
   mov.rotate(dir);
   if (dir) {
     endRotation = imu.getYaw() - 50;
@@ -64,7 +61,6 @@ void vittima(bool dir){
     else while (imu.getYaw() > endRotation) {
         delay(10);
       }
-
   }//sinistra
   else {
     endRotation = imu.getYaw() + 50;
@@ -81,7 +77,7 @@ void vittima(bool dir){
   mov.stop();
 }
 
-void uccidiBertoldi(bool dir) {
+void vittima(bool dir){
   if (dir) {
     if (US[2].read() > 20) {
       rotate(dir);
@@ -165,16 +161,6 @@ void uccidiBertoldi(bool dir) {
   //  rotate(!dir);
 }
 
-<<<<<<< HEAD
-void primoVito() {
-  if (US[0].read() > 40) {
-    //    analogWrite(10, 100);
-    rotate(false);
-    //mov.rotate(false);
-    //    delay(600);
-    raddrizzati();
-    //  analogWrite(10, 0);
-=======
 void sempreADestra() {
   /*for(int i=0;i<4;i++){
     Serial.println(US[i].read());
@@ -183,7 +169,6 @@ void sempreADestra() {
     mov.rotate(false);//false=destra
     delay(500);
     mov.stop();
->>>>>>> origin/master
   }
   //    while(x!=90) {
   //      mov.rotate(true);
@@ -289,7 +274,6 @@ void sempreADestra() {
   mov.stop();
 }
 
-
 void raddrizzati() {
 //  usNum = 3;
 //  for (int i = 0; i < 3; i++) {
@@ -314,7 +298,6 @@ void setup() {
   k2 = k1 + 2;
   //imu.calibrate();
 }
-
 
 
 void loop() {
