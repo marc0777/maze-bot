@@ -1,5 +1,5 @@
-#ifndef _ADXL345_H
-#define _ADXL345_H
+#ifndef ADXL345_H
+#define ADXL345_H
 
 #include <Arduino.h>
 #include <Wire.h>
@@ -9,16 +9,14 @@
 #define POWER_CTL 0x2D
 #define DATAX0 0x32
 
-class ADXL345
-{
+class ADXL345 {
   private:
     int zG[3];
     int readRegister(byte reg_addr, int nbytes, byte *buffer);
     int writeRegister(byte reg_addr, int nbytes, byte *buffer);
 
   public:
-    enum range_t
-    {
+    enum range_t {
       RANGE_16G = 0x0B,
       RANGE_8G  = 0x0A,
       RANGE_4G  = 0x09,
@@ -35,4 +33,4 @@ class ADXL345
     void setZeroG(double x, double y, double z);
 };
 
-#endif // _ADXL345_H
+#endif // ADXL345_H

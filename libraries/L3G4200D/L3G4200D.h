@@ -48,15 +48,13 @@ struct Vector
 };
 #endif
 
-typedef enum
-{
+typedef enum {
   L3G4200D_SCALE_2000DPS = 0b10,
   L3G4200D_SCALE_500DPS  = 0b01,
   L3G4200D_SCALE_250DPS  = 0b00
 } l3g4200d_dps_t;
 
-typedef enum
-{
+typedef enum {
   L3G4200D_DATARATE_800HZ_110  = 0b1111,
   L3G4200D_DATARATE_800HZ_50   = 0b1110,
   L3G4200D_DATARATE_800HZ_35   = 0b1101,
@@ -76,6 +74,7 @@ typedef enum
 class L3G4200D
 {
   public:
+	float x, y, z;
     bool begin(l3g4200d_dps_t scale = L3G4200D_SCALE_2000DPS, l3g4200d_odrbw_t odrbw = L3G4200D_DATARATE_100HZ_12_5);
     l3g4200d_dps_t getScale(void);
     l3g4200d_odrbw_t getOdrBw(void);
@@ -89,14 +88,15 @@ class L3G4200D
     byte readTemperature(void);
 
   private:
-    Vector r;
-    Vector n;
-    Vector d;
-    Vector t;
-
+	
+	float raw[3];
+	float threshold[3];
+	float data[3];
+	
     bool useCalibrate;
     float actualThreshold;
     float dpsPerDigit;
+	
     float thresholdX;
     float thresholdY;
     float thresholdZ;
