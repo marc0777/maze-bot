@@ -21,7 +21,6 @@ class Matrix {
       byte direction;
     } cell;
     cell maze[2][17][17];
-    unsigned char byte;
     byte floor;
     // Posizione attuale
     byte r;
