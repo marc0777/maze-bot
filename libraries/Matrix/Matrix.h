@@ -7,7 +7,9 @@ class Matrix {
 public:
     Matrix();
 
-    void check(int tempdx, int tempsx, int distdx, int distsx, int color);
+    void check(float tempDx, float tempSx, float distDx, float distSx, byte color);
+
+    void changeFloor();
 
     bool guardaAvanti();
 
@@ -29,7 +31,7 @@ private:
         byte direction;
     } cell;
     cell maze[2][17][17];
-    byte floor;
+    bool floor;
     // Posizione attuale
     byte r;
     byte c;

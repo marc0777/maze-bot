@@ -8,19 +8,23 @@ Matrix::Matrix() {
     c = 8;
 }
 
-void Matrix::check(float tempDx, float tempSx, float distDx, float distDx, int color) { /// Controlla lo stato della cella
+void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, byte color) { /// Controlla lo stato della cella
     maze[floor][r][c].visited = true;
     maze[floor][r][c].direction = dir;
-    maze[floor][r][c].hot = tempdx > 68 || tempsx > 60; // Dovrebbe bastare questo altrimenti
-    /*bool tDx = tempdx > 60;
-    bool tSx = tempsx > 60;
-    bool vicinoDx = distdx < 8;
-    bool vicinoSx = distsx < 8;
-    maze[floor][r][c].hot = tDx && vicinoDx || tSx && vicinoSx; */
+    /*maze[floor][r][c].hot = tempdx > 68 || tempsx > 60;*/
+    bool tDx = tempDx >= 20;
+    bool tSx = tempSx >= 20;
+    bool vicinoDx = distDx < 10;
+    bool vicinoSx = distSx < 10;
+    maze[floor][r][c].hot = tDx && vicinoDx || tSx && vicinoSx;
     if (color == 1) {
         checkr = r;
         checkc = c;
     }
+}
+
+void Matrix::changeFloor() {
+    floor = !floor;
 }
 
 bool Matrix::guardaAvanti() { /// Restituisce vero se la cella davanti al bot è già stata visitata

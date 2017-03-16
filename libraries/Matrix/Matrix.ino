@@ -8,7 +8,7 @@ void setup() {
     m.go();
     m.rotate(true);
     m.go();
-    m.check(70, 40, 7, 5, 1);
+    m.check(24, 13, 7, 25, 1);
     Serial.println(m.isVisited());
     Serial.println(m.isHot());
     m.rotate(true);
