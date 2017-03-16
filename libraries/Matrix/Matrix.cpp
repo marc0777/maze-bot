@@ -1,12 +1,10 @@
-Matrix::
-
-#include "Arduino.h"
+#include "Matrix.h"
 
 Matrix::Matrix() {
 		dir = 0;
 		// parto dal centro
 		r = 8;
-		c = 8; 
+		c = 8;
 	}
 
 void Matrix::check(int tempdx, int tempsx, int distdx, int distsx, int color) { // TUTTO DA CHIARIRE
