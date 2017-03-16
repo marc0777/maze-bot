@@ -5,9 +5,9 @@ struct Cella {
     int direction = 0;
 };
 
-class Matrx {
+class Matrix {
 public:
-    Matrx() {}
+    Matrix() {}
 
     void verifica(int tempdx, int tempsx, int distdx, int distsx, int colore) { // TUTTO DA CHIARIRE
         maze[piano][i][j].visited = true;
@@ -24,7 +24,7 @@ public:
         }
     }
 
-    bool guardAvanti() { /// Restituisce vero se la cella davanti al bot è già stata visitata
+    bool guardaAvanti() { /// Restituisce vero se la cella davanti al bot è già stata visitata
         short si = i, sj = j;
         avanti();
         bool ris = maze[piano][i][j].visited;
@@ -56,7 +56,7 @@ public:
         }
     }
 
-    void gira(bool senso) /// Cambia direzione nella matrice (true = sinistra, false = destra)
+    void rotate(bool senso) /// Cambia direzione nella matrice (true = sinistra, false = destra)
     {
         if (senso)
             dir = dir == 0 ? 3 : dir - 1;
@@ -65,7 +65,7 @@ public:
         maze[piano][i][j].direction = dir;
     }
 
-    bool isCaldo() {
+    bool isHot() {
         return maze[piano][i][j].calda;
     }
 
