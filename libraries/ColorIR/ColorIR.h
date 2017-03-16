@@ -11,6 +11,6 @@
 
 class ColorIR {
   public:
-    int read();
+    byte read();
 };
 #endif

@@ -8,10 +8,9 @@ Matrix::Matrix() {
     c = 8;
 }
 
-void Matrix::check(int tempdx, int tempsx, int distdx, int distsx, int color) { // TUTTO DA CHIARIRE
+void Matrix::check(float tempDx, float tempSx, float distDx, float distDx, int color) { /// Controlla lo stato della cella
     maze[floor][r][c].visited = true;
     maze[floor][r][c].direction = dir;
-    Serial.println(sizeof(maze[floor][r][c]));
     maze[floor][r][c].hot = tempdx > 68 || tempsx > 60; // Dovrebbe bastare questo altrimenti
     /*bool tDx = tempdx > 60;
     bool tSx = tempsx > 60;
