@@ -4,21 +4,29 @@
 #include <Arduino.h>
 
 class Matrix {
-  public:
+public:
     Matrix();
+
     void check(int tempdx, int tempsx, int distdx, int distsx, int color);
+
     bool guardaAvanti();
+
     void reset();
+
     void go();
+
     void rotate(bool direction);
+
     bool isHot();
+
     bool isVisited();
-  private:
+
+private:
     typedef struct {
-      bool visited;
-      bool hot;
-      bool rise;
-      byte direction;
+        bool visited;
+        bool hot;
+        bool rise;
+        byte direction;
     } cell;
     cell maze[2][17][17];
     byte floor;
