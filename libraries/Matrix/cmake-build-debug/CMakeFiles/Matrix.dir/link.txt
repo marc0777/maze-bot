@@ -1,2 +1,0 @@
-C:\PROGRA~2\CODEBL~1\MinGW\bin\ar.exe qc libMatrix.a  CMakeFiles/Matrix.dir/library.cpp.obj CMakeFiles/Matrix.dir/Matrix.cpp.obj
-C:\PROGRA~2\CODEBL~1\MinGW\bin\ranlib.exe libMatrix.a

@@ -7,44 +7,36 @@ struct Cella {
 
 class Matrx {
 public:
-    Matrx() {
+    Matrx() {}
+
+    void verifica(int tempdx, int tempsx, int distdx, int distsx, int colore) { // TUTTO DA CHIARIRE
+        maze[piano][i][j].visited = true;
+        maze[piano][i][j].direction = dir;
+        maze[piano][i][j].calda = tempdx > 68 || tempsx > 60; // Dovrebbe bastare questo altrimenti
+        bool tDx = tempdx > 60;
+        bool tSx = tempsx > 60;
+        bool vicinoDx = distdx < 8;
+        bool vicinoSx = distsx < 8;
+        maze[piano][i][j].calda = tDx && vicinoDx || tSx && vicinoSx;
+        if (colore == 1) {
+            checki = i;
+            checkj = j;
+        }
     }
 
-    void verifica(int tempdx, int tempsx, int distdx, int distsx) {
-        piani[piano][i][j].visited = true;
-        piani[piano][i][j].direction = dir;
-        /*bool tDx = (tDestra.readObj() - tDestra.readAmb()) > 20;
-         bool tSx = (tSinistra.readObj() - tSinistra.readAmb()) > 20;
-         bool vicinoDx = US[0].read() < 8;
-         bool vicinoSx = US[2].read() < 8;
-         if (!maze[i][j].calda || tDx && vicinoDx || tSx && vicinoSx)
-         {
-         maze[i][j].calda = true;
-         }
-         if (tDx && !vicinoDx)
-         {
-         int ncelle = (int) US[0].read() % 30;
-         short ti = i, tj = j, tdr = dir;
-         gira(false);
-         for (int k = 0; k < ncelle; k++)
-         avanti();
-         maze[i][j].calda = true;
-         i = ti;
-         j = tj;
-         dir = tdr;
-         }
-         if (tSx && !vicinoSx)
-         {
-         int ncelle = (int) US[2].read() % 30;
-         short ti = i, tj = j, tdr = dir;
-         gira(true);
-         for (int k = 0; k < ncelle; k++)
-         avanti();
-         maze[i][j].calda = true;
-         i = ti;
-         j = tj;
-         dir = tdr;
-         }*/
+    bool guardAvanti() { /// Restituisce vero se la cella davanti al bot è già stata visitata
+        short si = i, sj = j;
+        avanti();
+        bool ris = maze[piano][i][j].visited;
+        i = si;
+        j = sj;
+        return ris;
+    }
+
+    void reset() {
+        i = checki;
+        j = checkj;
+        dir = maze[piano][i][j].direction;
     }
 
     void avanti() {
@@ -70,22 +62,23 @@ public:
             dir = dir == 0 ? 3 : dir - 1;
         else
             dir = dir == 3 ? 0 : dir + 1;
-        piani[piano][i][j].direction = dir;
+        maze[piano][i][j].direction = dir;
     }
 
     bool isCaldo() {
-        return piani[piano][i][j].calda;
+        return maze[piano][i][j].calda;
     }
 
     bool isVisited() {
-        return piani[piano][i][j].visited;
+        return maze[piano][i][j].visited;
     }
 
 private:
-    Cella piani[2][17][17];
+    Cella maze[2][17][17];
     typedef unsigned char BYTE;
     BYTE piano = 0;
     short i = 8, j = 8; // parto dal centro, i = riga, j = colonna
     short dir = 0; // 0 = nord, 1 = est, 2 = sud, 3 = ovest
+    short checki, checkj; // Coordinate dell'ultimo checkpoint
 
 };
