@@ -11,8 +11,8 @@ class Temperature  {
  public:
   Temperature(byte address);
   void begin();
-  double readObj();
-  double readAmb();
+  float readObj();
+  float readAmb();
  private:
   float readTemp(byte reg);
   byte address;

@@ -8,11 +8,11 @@ void Temperature::begin() {
   Wire.begin();
 }
 
-double Temperature::readObj() {
+float Temperature::readObj() {
   return readTemp(MLX90614_TOBJ1);
 }
 
-double Temperature::readAmb() {
+float Temperature::readAmb() {
   return readTemp(MLX90614_TA);
 }
 
