@@ -1,10 +1,24 @@
 #include "Matrix.h"
 
-void setup(){
-  
+Matrix m;
+
+void setup() {
+    Serial.begin(9600);
+    Serial.println(m.isVisited());
+    m.go();
+    m.rotate(true);
+    m.go();
+    m.check(70, 40, 7, 5, 1);
+    Serial.println(m.isVisited());
+    m.rotate(true);
+    m.rotate(true);
+    m.go();
+    m.rotate(true);
+    m.rotate(true);
+    Serial.println(m.guardaAvanti());
 }
 
-void loop(){
-  
+void loop() {
+
 }
 
