@@ -14,12 +14,12 @@
 
 class Motion {
   public:
-    Motion ();
+    Motion();
     void go();
-    void go (bool invert);
+    void go(bool invert);
     void rotate();
-    void rotate (bool invert);
-    void rotate (bool invert, bool infinite);	
+    void rotate(bool invert);
+    void rotate(bool invert, bool infinite);	
     void stop();
     void setState(byte state);
 };
