@@ -1,7 +1,8 @@
 #ifndef Motion_h
 #define Motion_h
 
-#include "Wire.h"
+#include <Arduino.h>
+#include <Wire.h>
 
 #define MOTION_ADDRESS 7
 #define MOTION_STOP 0

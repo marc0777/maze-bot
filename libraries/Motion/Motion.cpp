@@ -9,7 +9,7 @@ void Motion::go() {
 }
 
 void Motion::go(bool invert) {
-	setState((state)?MOTION_BACKWARD:MOTION_FORWARD);
+	setState((invert)?MOTION_BACKWARD:MOTION_FORWARD);
 }
 
 void Motion::rotate() {
@@ -17,11 +17,11 @@ void Motion::rotate() {
 }
 
 void Motion::rotate(bool invert) {
-	setState((state)?MOTION_LEFT:MOTION_RIGHT);
+	setState((invert)?MOTION_LEFT:MOTION_RIGHT);
 }
 
 void Motion::rotate(bool invert, bool infinite) {
-	setState((infinite)?((state)?MOTION_LEFT_INFINITE:MOTION_RIGHT_INFINITE):((state)?MOTION_LEFT:MOTION_RIGHT));
+	setState((infinite)?((invert)?MOTION_LEFT_INFINITE:MOTION_RIGHT_INFINITE):((invert)?MOTION_LEFT:MOTION_RIGHT));
 }
 
 void Motion::stop() {
