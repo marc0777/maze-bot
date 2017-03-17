@@ -50,12 +50,12 @@ bool L3G4200D::begin(l3g4200d_dps_t scale, l3g4200d_odrbw_t odrbw) {
 }
 
 // Get current scale
-l3g4200d_dps_t L3G4200D::getScale(void) {
+l3g4200d_dps_t L3G4200D::getScale() {
   return (l3g4200d_dps_t)((readRegister8(L3G4200D_REG_CTRL_REG4) >> 4) & 0x03);
 }
 
 // Get current output data range and bandwidth
-l3g4200d_odrbw_t L3G4200D::getOdrBw(void) {
+l3g4200d_odrbw_t L3G4200D::getOdrBw() {
   return (l3g4200d_odrbw_t)((readRegister8(L3G4200D_REG_CTRL_REG1) >> 4) & 0x0F);
 }
 
@@ -93,7 +93,7 @@ void L3G4200D::calibrate(byte samples) {
 }
 
 // Get current threshold value
-byte L3G4200D::getThreshold(void) {
+byte L3G4200D::getThreshold() {
   return actualThreshold;
 }
 
@@ -164,12 +164,12 @@ byte L3G4200D::readRegister8(byte reg) {
 // If you run two sequential measures and differentiate them you can get temperature variation.
 // This also means that two devices in the same temp conditions can return different outputs.
 // Finally, you can use this info to compensate drifts due to temperature changes.
-byte L3G4200D::readTemperature(void) {
+byte L3G4200D::readTemperature() {
   return readRegister8(L3G4200D_REG_OUT_TEMP);
 }
 
 
-Vector L3G4200D::readRaw() {
+void L3G4200D::readRaw() {
   Wire.beginTransmission(L3G4200D_ADDRESS);
   Wire.write(L3G4200D_REG_OUT_X_L | (1 << 7));
   Wire.endTransmission();
@@ -184,14 +184,12 @@ Vector L3G4200D::readRaw() {
   byte zla = Wire.read();
   byte zha = Wire.read();
 
-  r.XAxis = xha << 8 | xla;
-  r.YAxis = yha << 8 | yla;
-  r.ZAxis = zha << 8 | zla;
-
-  return r;
+  raw[0] = xha << 8 | xla;
+  raw[1] = yha << 8 | yla;
+  raw[2] = zha << 8 | zla;
 }
 
-Vector L3G4200D::readNormalize() {
+Vector L3G4200D::read() {
   readRaw();
   if (useCalibrate) {
     x = (raw[0] - data[0]) * dpsPerDigit;
@@ -208,5 +206,4 @@ Vector L3G4200D::readNormalize() {
     if (abs(y) < t.YAxis) y = 0;
     if (abs(z) < t.ZAxis) z = 0;
   }
-  return n;
 }
