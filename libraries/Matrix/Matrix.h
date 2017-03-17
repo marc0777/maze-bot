@@ -11,7 +11,7 @@ public:
 
     void changeFloor();
 
-    bool guardaAvanti();
+    bool frontCheck();
 
     void reset();
 

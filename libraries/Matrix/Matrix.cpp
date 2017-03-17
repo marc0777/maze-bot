@@ -27,7 +27,7 @@ void Matrix::changeFloor() {
     floor = !floor;
 }
 
-bool Matrix::guardaAvanti() { /// Restituisce vero se la cella davanti al bot è già stata visitata
+bool Matrix::frontCheck() { /// Restituisce vero se la cella davanti al bot è già stata visitata
     byte sr = r;
     byte sc = c;
     go();
