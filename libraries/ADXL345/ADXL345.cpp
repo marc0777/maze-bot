@@ -21,9 +21,9 @@ int ADXL345::readRegister(byte reg_addr, int nbytes, byte *buffer) {
 
 ADXL345::ADXL345() {
   Wire.begin();
-  zG[0] = -20;
-  zG[1] =  15;
-  zG[2] = -23;
+  offset[0] = -20;
+  offset[1] =  15;
+  offset[2] = -23;
 }
 
 void ADXL345::begin() {
@@ -39,24 +39,17 @@ void ADXL345::end() {
 void ADXL345::read() {
   byte buffer[6];
   readRegister(DATAX0, 6, buffer);
-  x = ((buffer[0] + (buffer[1] << 8)) - zG[0]) / 256.0;
-  y = ((buffer[2] + (buffer[3] << 8)) - zG[1]) / 256.0;
-  z = ((buffer[4] + (buffer[5] << 8)) - zG[2]) / 256.0;
+  x = ((buffer[0] + (buffer[1] << 8)) - offset[0]) / 256.0;
+  y = ((buffer[2] + (buffer[3] << 8)) - offset[1]) / 256.0;
+  z = ((buffer[4] + (buffer[5] << 8)) - offset[2]) / 256.0;
 }
 
 void ADXL345::setRange(range_t range) {
-  switch (range) {
-    case RANGE_16G:
-    case RANGE_8G:
-    case RANGE_4G:
-    case RANGE_2G:
-      writeRegister(DATA_FORMAT, 1, (byte *)&range);
-      break;
-  }
+   writeRegister(DATA_FORMAT, 1, (byte *)&range);
 }
 
 void ADXL345::setZeroG(double x, double y, double z) {
-  zG[0] = x * 256.0;
-  zG[1] = y * 256.0;
-  zG[2] = z * 256.0;
+  offset[0] = x * 256.0;
+  offset[1] = y * 256.0;
+  offset[2] = z * 256.0;
 }
