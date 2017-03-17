@@ -5,7 +5,7 @@
 #include <Wire.h>
 #include <math.h>
 
-#define L3G4200D_ADDRESS           (0xD2 >> 1)
+#define L3G4200D_ADDRESS           (0x69)
 
 #define L3G4200D_REG_WHO_AM_I      (0x0F)
 
