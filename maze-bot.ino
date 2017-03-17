@@ -18,7 +18,7 @@ Temperature temps [2] = {Temperature(0x5A), Temperature(0x5C)}; // Sensori tempe
 
 void drive(){  /// Funzione che guida tutto
   float dist = ultrasonic[3].read() - 30;
-  Motion.go();
+  mov.go();
   bool black = false;
   while (ultrasonic[3].read() > dist){
     /* Controllo del nero
@@ -27,7 +27,7 @@ void drive(){  /// Funzione che guida tutto
     */
   }
   if (!black) {
-    Motion.stop();  
+    mov.stop();
   }
 }
 
