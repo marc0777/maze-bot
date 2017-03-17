@@ -38,16 +38,6 @@
 #define L3G4200D_REG_INT1_THS_ZL   (0x37)
 #define L3G4200D_REG_INT1_DURATION (0x38)
 
-#ifndef VECTOR_STRUCT_H
-#define VECTOR_STRUCT_H
-struct Vector
-{
-  float XAxis;
-  float YAxis;
-  float ZAxis;
-};
-#endif
-
 typedef enum {
   L3G4200D_SCALE_2000DPS = 0b10,
   L3G4200D_SCALE_500DPS  = 0b01,
@@ -71,27 +61,25 @@ typedef enum {
   L3G4200D_DATARATE_100HZ_12_5 = 0b0000
 } l3g4200d_odrbw_t;
 
-class L3G4200D
-{
+class L3G4200D {
   public:
 	float x, y, z;
     bool begin(l3g4200d_dps_t scale = L3G4200D_SCALE_2000DPS, l3g4200d_odrbw_t odrbw = L3G4200D_DATARATE_100HZ_12_5);
-    l3g4200d_dps_t getScale(void);
-    l3g4200d_odrbw_t getOdrBw(void);
+    l3g4200d_dps_t getScale();
+    l3g4200d_odrbw_t getOdrBw();
 
     void calibrate(byte samples = 50);
     void setThreshold(byte multiple = 1);
-    byte getThreshold(void);
+    byte getThreshold();
 
-    Vector readRaw(void);
-    Vector readNormalize();
-    byte readTemperature(void);
+    void readRaw();
+    void read();
+    byte readTemperature();
 
   private:
-	
-	float raw[3];
-	float threshold[3];
-	float data[3];
+    float raw[3];
+    float threshold[3];
+    float data[3];
 	
     bool useCalibrate;
     float actualThreshold;
