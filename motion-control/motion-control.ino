@@ -1,11 +1,18 @@
-#include <Motion.h>
+#include <Wire.h>
+
+#define ADDRESS 7
+
+byte state = 0;
+
+void onReceive(int howMany) {
+  state = Wire.read();
+}
 
 void setup() {
-  // put your setup code here, to run once:
-
+  Wire.begin(ADDRESS);
+  Wire.onReceive(onReceive);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
+  
 }
