@@ -1,4 +1,7 @@
+#include <Arduino.h>
+
 #include <Wire.h>
+#include <Motion.h>
 
 #define ADDRESS 7
 
@@ -14,5 +17,5 @@ void setup() {
 }
 
 void loop() {
-  
+
 }

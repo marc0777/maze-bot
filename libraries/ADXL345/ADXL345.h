@@ -4,10 +4,10 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#define ADDRESS 0x53
-#define DATA_FORMAT 0x31
-#define POWER_CTL 0x2D
-#define DATAX0 0x32
+#define ADXL345_ADDRESS 0x53
+#define ADXL345_DATA_FORMAT 0x31
+#define ADXL345_POWER 0x2D
+#define ADXL345_DATA 0x32
 
 class ADXL345 {
   public:

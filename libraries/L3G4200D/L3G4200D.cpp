@@ -45,7 +45,7 @@ bool L3G4200D::begin(l3g4200d_dps_t scale, l3g4200d_odrbw_t odrbw) {
 
   // Boot in normal mode, disable FIFO, HPF disabled
   writeRegister8(CTRL_REG5, 0x00);
-  
+
   return true;
 }
 
@@ -103,7 +103,7 @@ void L3G4200D::setThreshold(byte multiple) {
 
     // Calculate threshold vectors
     for(int i = 0; i<3; i++) threshold[i] *= multiple;
-  } 
+  }
   else {
     // No threshold
     for(int i = 0; i<3; i++) threshold[i]=0;
@@ -185,7 +185,7 @@ void L3G4200D::readRaw() {
   raw[2] = zha << 8 | zla;
 }
 
-Vector L3G4200D::read() {
+void L3G4200D::read() {
   readRaw();
   if (useCalibrate) {
     x = (raw[0] - delta[0]) * dpsPerDigit;

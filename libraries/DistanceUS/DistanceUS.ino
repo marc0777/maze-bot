@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #include "DistanceUS.h"
 
 DistanceUS us (2,3,5,93);

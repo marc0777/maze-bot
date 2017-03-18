@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #include "Temperature.h"
 
 Temperature t = Temperature(0x5A);

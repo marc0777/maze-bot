@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #include "DistanceIR.h"
 
 DistanceIR dist(A0, 25, 93);
