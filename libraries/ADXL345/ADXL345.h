@@ -15,7 +15,7 @@ typedef enum {
   RANGE_4G  = 0x09,
   RANGE_2G  = 0x08
 } range_t ;
-    
+
 class ADXL345 {
   public:
     ADXL345();
