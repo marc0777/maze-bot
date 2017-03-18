@@ -1,7 +1,1 @@
 *.make
-.vs/maze-bot/v15/Browse.VC.db
-*.opendb
-.vs/ProjectSettings.json
-*.sqlite
-*.suo
-.vs/VSWorkspaceState.json
