@@ -14,7 +14,7 @@ int ADXL345::readRegister(byte reg_addr, int nbytes, byte *buffer) {
   Wire.beginTransmission(ADXL345_ADDRESS);
   Wire.write(reg_addr);
   Wire.endTransmission();
-  Wire.requestFrom(ADDRESS, nbytes);
+  Wire.requestFrom(ADXL345_ADDRESS, nbytes);
   while (Wire.available() && idx < nbytes) buffer[idx++] = Wire.read();
   return idx;
 }

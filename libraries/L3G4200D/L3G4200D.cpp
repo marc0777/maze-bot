@@ -12,22 +12,22 @@ bool L3G4200D::begin(l3g4200d_dps_t scale, l3g4200d_odrbw_t odrbw) {
   Wire.begin();
 
   // Check L3G4200D Who Am I Register
-  if (fastRegister8(WHO_AM_I) != 0xD3) return false;
+  if (fastRegister8(L3G4200D_WHO_AM_I) != 0xD3) return false;
 
   // Enable all axis and setup normal mode + Output Data Range & Bandwidth
   byte reg1 = 0x00;
   reg1 |= 0x0F; // Enable all axis and setup normal mode
   reg1 |= (odrbw << 4); // Set output data rate & bandwidh
-  writeRegister8(CTRL_REG1, reg1);
+  writeRegister8(L3G4200D_CTRL_REG1, reg1);
 
   // Disable high pass filter
-  writeRegister8(CTRL_REG2, 0x00);
+  writeRegister8(L3G4200D_CTRL_REG2, 0x00);
 
   // Generata data ready interrupt on INT2
-  writeRegister8(CTRL_REG3, 0x08);
+  writeRegister8(L3G4200D_CTRL_REG3, 0x08);
 
   // Set full scale selection in continous mode
-  writeRegister8(CTRL_REG4, scale << 4);
+  writeRegister8(L3G4200D_CTRL_REG4, scale << 4);
 
   switch (scale) {
     case L3G4200D_SCALE_250DPS:
@@ -44,19 +44,19 @@ bool L3G4200D::begin(l3g4200d_dps_t scale, l3g4200d_odrbw_t odrbw) {
   }
 
   // Boot in normal mode, disable FIFO, HPF disabled
-  writeRegister8(CTRL_REG5, 0x00);
+  writeRegister8(L3G4200D_CTRL_REG5, 0x00);
 
   return true;
 }
 
 // Get current scale
 l3g4200d_dps_t L3G4200D::getScale() {
-  return (l3g4200d_dps_t)((readRegister8(CTRL_REG4) >> 4) & 0x03);
+  return (l3g4200d_dps_t)((readRegister8(L3G4200D_CTRL_REG4) >> 4) & 0x03);
 }
 
 // Get current output data range and bandwidth
 l3g4200d_odrbw_t L3G4200D::getOdrBw() {
-  return (l3g4200d_odrbw_t)((readRegister8(CTRL_REG1) >> 4) & 0x0F);
+  return (l3g4200d_odrbw_t)((readRegister8(L3G4200D_CTRL_REG1) >> 4) & 0x0F);
 }
 
 // Calibrate algorithm
@@ -115,7 +115,7 @@ void L3G4200D::setThreshold(byte multiple) {
 
 // Write 8-bit to register
 void L3G4200D::writeRegister8(byte reg, byte value) {
-  Wire.beginTransmission(ADDRESS);
+  Wire.beginTransmission(L3G4200D_ADDRESS);
   Wire.write(reg);
   Wire.write(value);
   Wire.endTransmission();
@@ -125,11 +125,11 @@ void L3G4200D::writeRegister8(byte reg, byte value) {
 byte L3G4200D::fastRegister8(byte reg) {
   byte value;
 
-  Wire.beginTransmission(ADDRESS);
+  Wire.beginTransmission(L3G4200D_ADDRESS);
   Wire.write(reg);
   Wire.endTransmission();
 
-  Wire.beginTransmission(ADDRESS);
+  Wire.beginTransmission(L3G4200D_ADDRESS);
   Wire.requestFrom(L3G4200D_ADDRESS, 1);
   value = Wire.read();
   Wire.endTransmission();
@@ -141,12 +141,12 @@ byte L3G4200D::fastRegister8(byte reg) {
 byte L3G4200D::readRegister8(byte reg) {
   byte value;
 
-  Wire.beginTransmission(ADDRESS);
+  Wire.beginTransmission(L3G4200D_ADDRESS);
   Wire.write(reg);
   Wire.endTransmission();
 
-  Wire.beginTransmission(ADDRESS);
-  Wire.requestFrom(ADDRESS, 1);
+  Wire.beginTransmission(L3G4200D_ADDRESS);
+  Wire.requestFrom(L3G4200D_ADDRESS, 1);
   while (!Wire.available()) {};
   value = Wire.read();
   Wire.endTransmission();
@@ -161,15 +161,15 @@ byte L3G4200D::readRegister8(byte reg) {
 // This also means that two devices in the same temp conditions can return different outputs.
 // Finally, you can use this info to compensate drifts due to temperature changes.
 byte L3G4200D::readTemperature() {
-  return readRegister8(OUT_TEMP);
+  return readRegister8(L3G4200D_OUT_TEMP);
 }
 
 
 void L3G4200D::readRaw() {
-  Wire.beginTransmission(ADDRESS);
-  Wire.write(OUT | (1 << 7));
+  Wire.beginTransmission(L3G4200D_ADDRESS);
+  Wire.write(L3G4200D_OUT | (1 << 7));
   Wire.endTransmission();
-  Wire.requestFrom(ADDRESS, 6);
+  Wire.requestFrom(L3G4200D_ADDRESS, 6);
 
   while (Wire.available() < 6);
 

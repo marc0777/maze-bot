@@ -9,6 +9,13 @@
 #define ADXL345_POWER 0x2D
 #define ADXL345_DATA 0x32
 
+typedef enum {
+  RANGE_16G = 0x0B,
+  RANGE_8G  = 0x0A,
+  RANGE_4G  = 0x09,
+  RANGE_2G  = 0x08
+} range_t ;
+    
 class ADXL345 {
   public:
     ADXL345();
@@ -17,15 +24,7 @@ class ADXL345 {
     void read();
     void setRange(range_t range);
     void setZeroG(double x, double y, double z);
-
     float x, y, z;
-
-    enum range_t {
-      RANGE_16G = 0x0B,
-      RANGE_8G  = 0x0A,
-      RANGE_4G  = 0x09,
-      RANGE_2G  = 0x08
-    };
   private:
     int offset[3];
     int readRegister(byte reg_addr, int nbytes, byte *buffer);

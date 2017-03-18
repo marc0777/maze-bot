@@ -10,4 +10,3 @@ byte ColorIR::read() {
   media >>= 1;
   return (media <= BLACK) ? ((media >= MIRROR) ? 1 : 0) : 2;
 }
-

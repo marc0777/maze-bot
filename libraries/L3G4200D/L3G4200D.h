@@ -1,20 +1,18 @@
 #ifndef L3G4200D_h
 #define L3G4200D_h
 
-#include "Arduino.h"
+#include <Arduino.h>
 #include <Wire.h>
-#include <math.h>
 
-#define ADDRESS 0x69
-#define WHO_AM_I 0x0F
-#define CTRL_REG1 0x20
-#define CTRL_REG2 0x21
-#define CTRL_REG3 0x22
-#define CTRL_REG4 0x23
-#define CTRL_REG5 0x24
-#define OUT 0x28
-#define OUT_TEMP 0x26
-
+#define L3G4200D_ADDRESS 0x69
+#define L3G4200D_WHO_AM_I 0x0F
+#define L3G4200D_CTRL_REG1 0x20
+#define L3G4200D_CTRL_REG2 0x21
+#define L3G4200D_CTRL_REG3 0x22
+#define L3G4200D_CTRL_REG4 0x23
+#define L3G4200D_CTRL_REG5 0x24
+#define L3G4200D_OUT 0x28
+#define L3G4200D_OUT_TEMP 0x26
 
 typedef enum {
   L3G4200D_SCALE_2000DPS = 0b10,
@@ -61,7 +59,7 @@ class L3G4200D {
     float thresholdX;
     float thresholdY;
     float thresholdZ;
-	
+
     void writeRegister8(byte reg, byte value);
     byte readRegister8(byte reg);
     byte fastRegister8(byte reg);
