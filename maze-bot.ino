@@ -7,7 +7,6 @@
 #include <Motion.h>
 
 #define INTERRUPT 2
-
 #define DEBUG TRUE
 
 Motion mov;
