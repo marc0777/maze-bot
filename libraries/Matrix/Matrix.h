@@ -21,7 +21,7 @@ public:
 
     void back();
 
-    byte getDir();  /// Ritorna 1 per destra, 2 per avanti, 3 per sinistra, 4 dietro
+    byte getDir(float dx, float front, float sx);  /// Ritorna 1 per destra, 2 per avanti, 3 per sinistra, 4 dietro
 
     void rotate(bool direction);
 
