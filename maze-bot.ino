@@ -6,6 +6,8 @@
 #include <DistanceUS.h>
 #include <Motion.h>
 
+#define INTERRUPT 2
+
 #define DEBUG TRUE
 
 Motion mov;
@@ -41,11 +43,20 @@ void drive() {  /// Funzione che guida tutto
     mov.stop();
 }
 
+void pause () {
+  byte state = mot.get();
+  while(digitalRead(INTERRUPT));
+  mov.set(state);
+}
+
 void setup() {
   #ifdef DEBUG
     Serial.begin(9600);
     Serial.println("Avvio!");
   #endif
+  pinMode(INTERRUPT, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(INTERRUPT), pause, FALLING);
+  for (int i = 0; i<2; i++) temps[i].begin();
 }
 
 void loop() {
