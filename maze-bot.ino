@@ -24,8 +24,7 @@ Temperature temps[2] = {Temperature(0x5A), Temperature(0x5C)}; // Sensori temper
 
 void drive() {  /// Funzione che guida tutto
     mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[0].read(), ultrasonic[2].read(), color.read());
-    byte dir = mat.getDir(ultrasonic[0].read(), ultrasonic[3].read(), ultrasonic[2].read());
-    switch (mat.getDir()){
+    switch (mat.getDir(ultrasonic[0].read(), ultrasonic[3].read(), ultrasonic[2].read())){
       case 1 :
         mat.rotate(false);
         mov.rotate();
