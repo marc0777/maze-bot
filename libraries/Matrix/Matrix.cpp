@@ -79,33 +79,14 @@ void Matrix::back() {
     }
 }
 
-byte Matrix::getDir(float dx, float front, float sx) { /// Ritorna 1 per destra, 2 per avanti, 3 per sinistra, 4 dietro
-  byte saved_dir = dir;
-  byte pdir = 4;
+byte Matrix::getDir() { /// Ritorna 1 per destra, 2 per avanti, 3 per sinistra, 4 dietro
+  byte saved_dir = maze[floor][r][c].direction;
+  byte dir = 0;
+  bool found = false;
   rotate(false);
-  if(!frontCheck() && !frontBlack() && dx < DISTWALL){
-    pdir = 1;
-    rotate(true);
-  }else if (!frontCheck() && !frontBlack() && front < DISTWALL){
-    pdir = 2;
-    rotate(true);
-  }else if(!frontCheck() && !frontBlack() && sx < DISTWALL){
-    pdir = 3;
-    dir = saved_dir;
-    maze[floor][r][c].direction = saved_dir;
-    rotate(false);
-  }else if(!frontBlack() && dx < DISTWALL){
-    pdir = 1;
-    rotate(true);
-  }else if (!frontBlack() && front < DISTWALL){
-    pdir = 2;
-    rotate(true);
-  }else if(!frontBlack() && sx < DISTWALL){
-    pdir = 3;
+  if(!frontCheck && !frontBlack){
+
   }
-  dir = saved_dir;
-  maze[floor][r][c].direction = saved_dir;
-  return dir;
 }
 
 void Matrix::rotate(bool direction) { /// Cambia direzione nella matrice (true = sinistra, false = destra)
