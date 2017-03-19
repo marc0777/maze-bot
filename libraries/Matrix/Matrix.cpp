@@ -12,15 +12,13 @@ void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, byte 
     maze[floor][r][c].visited = true;
     maze[floor][r][c].direction = dir;
     /*maze[floor][r][c].hot = tempdx > 68 || tempsx > 60;*/
-    bool tDx = tempDx >= 20;
-    bool tSx = tempSx >= 20;
-    bool vicinoDx = distDx < 10;
-    bool vicinoSx = distSx < 10;
-    maze[floor][r][c].hot = tDx && vicinoDx || tSx && vicinoSx;
+    bool hotDx = tempDx >= DELTATEMP && distDx < DISTWALL;
+    bool hotSx = tempSx >= DELTATEMP && distSx < DISTWALL;
+    maze[floor][r][c].hot = hotDx || hotSx;
     if (color == 1) {
         checkr = r;
         checkc = c;
-    }
+    }else if(color == 2) maze[floor][r][c].black = true;
 }
 
 void Matrix::changeFloor() {
@@ -28,12 +26,16 @@ void Matrix::changeFloor() {
 }
 
 bool Matrix::frontCheck() { /// Restituisce vero se la cella davanti al bot è già stata visitata
-    byte sr = r;
-    byte sc = c;
     go();
     bool ris = maze[floor][r][c].visited;
-    r = sr;
-    c = sc;
+    back();
+    return ris;
+}
+
+bool Matrix::frontBlack() { /// Restituisce vero se la cella davanti al bot è nera
+    go();
+    bool ris = maze[floor][r][c].black;
+    back();
     return ris;
 }
 
@@ -58,6 +60,33 @@ void Matrix::go() {
             c--;
             break;
     }
+}
+
+void Matrix::back() {
+    switch (dir) {
+        case 0:
+            r--;
+            break;
+        case 1:
+            c--;
+            break;
+        case 2:
+            r++;
+            break;
+        case 3:
+            c++;
+            break;
+    }
+}
+
+byte Matrix::getDir() { /// Ritorna 1 per destra, 2 per avanti, 3 per sinistra, 4 dietro
+  byte saved_dir = maze[floor][r][c].direction;
+  byte dir = 0;
+  bool found = false;
+  rotate(false);
+  if(!frontCheck && !frontBlack){
+
+  }
 }
 
 void Matrix::rotate(bool direction) { /// Cambia direzione nella matrice (true = sinistra, false = destra)

@@ -13,9 +13,13 @@ public:
 
     bool frontCheck();
 
+    bool frontBlack();
+
     void reset();
 
     void go();
+
+    void back();
 
     void rotate(bool direction);
 
@@ -28,9 +32,12 @@ private:
         bool visited;
         bool hot;
         bool rise;
+        bool black;
         byte direction;
     } cell;
-    cell maze[2][17][17];
+    cell maze[2][19][19];
+    #define DELTATEMP 10
+    #define DISTWALL 10
     bool floor;
     // Posizione attuale
     byte r;
