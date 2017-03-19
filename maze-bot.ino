@@ -6,6 +6,8 @@
 #include <DistanceUS.h>
 #include <Motion.h>
 
+#define DEBUG TRUE
+
 Motion mov;
 Matrix mat; // Matrice che rappresenta il maze
 ColorIR color; // Sensore di colore
@@ -40,8 +42,10 @@ void drive() {  /// Funzione che guida tutto
 }
 
 void setup() {
+  #ifdef DEBUG
     Serial.begin(9600);
     Serial.println("Avvio!");
+  #endif
 }
 
 void loop() {
