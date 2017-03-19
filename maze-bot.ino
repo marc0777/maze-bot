@@ -45,7 +45,7 @@ void drive() {  /// Funzione che guida tutto
 }
 
 void pause () {
-  byte state = mot.get();
+  byte state = mov.get();
   while(digitalRead(INTERRUPT));
   mov.set(state);
 }
