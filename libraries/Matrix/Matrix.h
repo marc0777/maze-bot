@@ -21,8 +21,8 @@ public:
 
     void back();
 
-    byte Matrix::getDir();  /// Ritorna 1 per destra, 2 per avanti, 3 per sinistra, 4 dietro
-    
+    byte getDir();  /// Ritorna 1 per destra, 2 per avanti, 3 per sinistra, 4 dietro
+
     void rotate(bool direction);
 
     bool isHot();
