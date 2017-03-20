@@ -3,6 +3,9 @@
 
 #include <Arduino.h>
 
+#define DELTATEMP 10
+#define DISTWALL 10
+
 class Matrix {
 public:
     Matrix();
@@ -38,8 +41,6 @@ private:
         byte direction;
     } cell;
     cell maze[2][19][19];
-    #define DELTATEMP 10
-    #define DISTWALL 10
     bool floor;
     // Posizione attuale
     byte r;
