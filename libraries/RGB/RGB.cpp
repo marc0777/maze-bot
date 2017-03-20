@@ -24,7 +24,7 @@ void RGB::crossFade() {
   crossFade(yellow);
 }
 
-void RGB::crossFade(int color[3]) {
+void RGB::crossFade(byte color[3]) {
   for (int i = 0; i < 3; i++) color[i]=(color[i] * 255) / 100;
   int step[3];
   for (int i = 0; i < 3; i++) step[i] = calculateStep(previous[i], color[i]);
