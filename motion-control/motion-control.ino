@@ -1,19 +1,27 @@
 #include <Arduino.h>
 
 #include <Wire.h>
-#include <Motion.h>
+#include <Moviment.h>
 
 #define ADDRESS 7
 
 byte state = 0;
 
-void onReceive(int howMany) {
+Moviment mov(100,0,0);
+
+void receiveEvent(int howMany) {
   state = Wire.read();
+  mov.set(state);
+}
+
+void requestEvent() {
+  Wire.write(mov.get());
 }
 
 void setup() {
   Wire.begin(ADDRESS);
-  Wire.onReceive(onReceive);
+  Wire.onReceive(receiveEvent);
+  Wire.onRequest(requestEvent);
 }
 
 void loop() {

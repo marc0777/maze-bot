@@ -40,7 +40,7 @@ void Moviment::setK(byte rightK, byte leftK) {
   kL = leftK;
 }
 
-void Moviment::setState(byte state) {
+void Moviment::set(byte state) {
   switch (state) {
     case 0:
       stop();
@@ -60,7 +60,7 @@ void Moviment::setState(byte state) {
   }
 }
 
-byte Moviment::getState() {
+byte Moviment::get() {
   return state;
 }
 

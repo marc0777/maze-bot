@@ -20,8 +20,8 @@ class Moviment {
     void stop();
     void setSpeed(byte speed);
     void setK(byte rightK, byte leftK);
-    void setState(byte state);
-    byte getState();
+    void set(byte state);
+    byte get();
   private:
     short bound (short n, short max);
     Motor *motorR;

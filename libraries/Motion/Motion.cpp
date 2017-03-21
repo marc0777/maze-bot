@@ -35,5 +35,7 @@ void Motion::set(byte state) {
 }
 
 byte Motion::get() {
+	while (Wire.available()) Wire.requestFrom(MOTION_ADDRESS,1);
+	byte state = Wire.read();
 	return state;
 }
