@@ -8,6 +8,7 @@
 
 #define INTERRUPT 2
 #define DEBUG TRUE
+#define ROTATEDELAY 1000
 
 Motion mov;
 Matrix mat; // Matrice che rappresenta il maze
@@ -42,13 +43,15 @@ void drive() {  /// Funzione che guida tutto
       }
       break;
   }
+  delay(ROTATEDELAY);
   float dist = ultrasonic[3].read() - 30;
   mat.go();
   mov.go();
   while (ultrasonic[3].read() > dist) {
     if (color.read() == 2) {
       mov.stop();
-      mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[0].read(), ultrasonic[2].read(), color.read());
+      //mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[0].read(), ultrasonic[2].read(), color.read());
+      mat.check(0, 0, 0, 0, color.read());
       mat.back();
       //TODO andare indietro fino al centro della casella
     }
