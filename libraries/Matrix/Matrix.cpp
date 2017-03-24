@@ -3,8 +3,7 @@
 Matrix::Matrix() {
 
   // parto dal centro
-  r = {8, 8};
-  c = {8, 8};
+  r[0] = r[1] = c[0] = c[1] = 8;
   floor = 0;
   dir = 0;
 }
@@ -17,10 +16,10 @@ void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, byte 
   bool hotSx = tempSx >= DELTATEMP && distSx < DISTWALL;
   maze[floor][r[floor][floor]][c[floor]].hot = hotDx || hotSx;
   if (color == 1) {
-    checkr = r[floor][floor];
+    checkr = r[floor];
     checkc = c[floor];
     checkfl = floor;
-  }else if(color == 2) maze[floor][r[floor][floor]][c[floor]].black = true;
+  }else if(color == 2) maze[floor][r[floor]][c[floor]].black = true;
 }
 
 void Matrix::changeFloor() {
@@ -29,14 +28,14 @@ void Matrix::changeFloor() {
 
 bool Matrix::frontCheck() { /// Restituisce vero se la cella davanti al bot è già stata visitata
   go();
-  bool ris = maze[floor][r[floor][floor]][c[floor]].visited;
+  bool ris = maze[floor][r[floor]][c[floor]].visited;
   back();
   return ris;
 }
 
 bool Matrix::frontBlack() { /// Restituisce vero se la cella davanti al bot è nera
   go();
-  bool ris = maze[floor][r[floor][floor]][c[floor]].black;
+  bool ris = maze[floor][r[floor]][c[floor]].black;
   back();
   return ris;
 }
