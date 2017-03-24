@@ -6,6 +6,7 @@
 #define ADDRESS 7
 
 float rapportoVR=60/90;//deltaV/deltaR
+float direzione=0;
 byte state = 0;
 Madgwick filter;
 Moviment mov(100,0,0);
@@ -23,6 +24,12 @@ void rotationSpeed(bool direction , float endRotation){
   if(direction)mov.setK(40+((endRotation-filter.getYaw())*rapportoVR),40+((endRotation-filter.getYaw())*rapportoVR));
   else mov.setK(40+((filter.getYaw()-endRotation)*rapportoVR),40+((filter.getYaw()-endRotation)*rapportoVR));
 }// negare la condizione se il filtro funziona in modo diverso
+
+void goStraight(bool invert){
+  direzione = filter.getYaw();
+  if (filter.getYaw()< direzione)mov.setK(10,0);
+  else if(filter.getYaw() > direzione)mov.setK(0,10);
+}
 
 float endAngle(float n, bool s){
   if(s){
