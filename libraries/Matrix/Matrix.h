@@ -25,7 +25,7 @@ public:
   void back();
 
   byte getDir(float dx, float front, float sx);  /// Ritorna 1 per destra, 2 per avanti, 3 per sinistra, 4 dietro
-
+  
   void rotate(bool direction);
 
   bool isHot();
@@ -43,8 +43,8 @@ private:
   cell maze[2][19][19];
   bool floor;
   // Posizione attuale
-  byte[2] r;
-  byte [2] c;
+  byte r[2];
+  byte  c[2];
   byte dir; // 0 = nord, 1 = est, 2 = sud, 3 = ovest
   // Coordinate dell'ultimo checkpoint
   byte checkr;
