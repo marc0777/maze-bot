@@ -9,12 +9,12 @@ Matrix::Matrix() {
 }
 
 void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, byte color) { /// Controlla lo stato della cella
-  maze[floor][r[floor][floor]][c[floor]].visited = true;
-  maze[floor][r[floor][floor]][c[floor]].direction = dir;
-  /*maze[floor][r[floor][floor]][c[floor]].hot = tempdx > 68 || tempsx > 60;*/
+  maze[floor][r[floor]][c[floor]].visited = true;
+  maze[floor][r[floor]][c[floor]].direction = dir;
+  /*maze[floor][r[floor]][c[floor]].hot = tempdx > 68 || tempsx > 60;*/
   bool hotDx = tempDx >= DELTATEMP && distDx < DISTWALL;
   bool hotSx = tempSx >= DELTATEMP && distSx < DISTWALL;
-  maze[floor][r[floor][floor]][c[floor]].hot = hotDx || hotSx;
+  maze[floor][r[floor]][c[floor]].hot = hotDx || hotSx;
   if (color == 1) {
     checkr = r[floor];
     checkc = c[floor];
