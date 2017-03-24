@@ -41,7 +41,7 @@ bool Matrix::frontBlack() { /// Restituisce vero se la cella davanti al bot è n
 }
 
 void Matrix::reset() {
-  r[floor][floor] = checkr;
+  r[floor] = checkr;
   c[floor] = checkc;
   floor = checkfl;
   dir = maze[floor][r[floor]][c[floor]].direction;
