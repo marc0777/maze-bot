@@ -8,47 +8,48 @@
 
 class Matrix {
 public:
-    Matrix();
+  Matrix();
 
-    void check(float tempDx, float tempSx, float distDx, float distSx, byte color);
+  void check(float tempDx, float tempSx, float distDx, float distSx, byte color);
 
-    void changeFloor();
+  void changeFloor();
 
-    bool frontCheck();
+  bool frontCheck();
 
-    bool frontBlack();
+  bool frontBlack();
 
-    void reset();
+  void reset();
 
-    void go();
+  void go();
 
-    void back();
+  void back();
 
-    byte getDir(float dx, float front, float sx);  /// Ritorna 1 per destra, 2 per avanti, 3 per sinistra, 4 dietro
+  byte getDir(float dx, float front, float sx);  /// Ritorna 1 per destra, 2 per avanti, 3 per sinistra, 4 dietro
 
-    void rotate(bool direction);
+  void rotate(bool direction);
 
-    bool isHot();
+  bool isHot();
 
-    bool isVisited();
+  bool isVisited();
 
 private:
-    typedef struct {
-        bool visited;
-        bool hot;
-        bool rise;
-        bool black;
-        byte direction;
-    } cell;
-    cell maze[2][19][19];
-    bool floor;
-    // Posizione attuale
-    byte r;
-    byte c;
-    byte dir; // 0 = nord, 1 = est, 2 = sud, 3 = ovest
-    // Coordinate dell'ultimo checkpoint
-    byte checkr;
-    byte checkc;
+  typedef struct {
+    bool visited;
+    bool hot;
+    bool rise;
+    bool black;
+    byte direction;
+  } cell;
+  cell maze[2][19][19];
+  bool floor;
+  // Posizione attuale
+  byte[2] r;
+  byte [2] c;
+  byte dir; // 0 = nord, 1 = est, 2 = sud, 3 = ovest
+  // Coordinate dell'ultimo checkpoint
+  byte checkr;
+  byte checkc;
+  byte checkfl;
 };
 
 #endif //MATRIX_H

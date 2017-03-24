@@ -1,82 +1,85 @@
 #include "Matrix.h"
 
 Matrix::Matrix() {
-    floor = 0;
-    dir = 0;
-    // parto dal centro
-    r = 8;
-    c = 8;
+
+  // parto dal centro
+  r = {8, 8};
+  c = {8, 8};
+  floor = 0;
+  dir = 0;
 }
 
 void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, byte color) { /// Controlla lo stato della cella
-    maze[floor][r][c].visited = true;
-    maze[floor][r][c].direction = dir;
-    /*maze[floor][r][c].hot = tempdx > 68 || tempsx > 60;*/
-    bool hotDx = tempDx >= DELTATEMP && distDx < DISTWALL;
-    bool hotSx = tempSx >= DELTATEMP && distSx < DISTWALL;
-    maze[floor][r][c].hot = hotDx || hotSx;
-    if (color == 1) {
-        checkr = r;
-        checkc = c;
-    }else if(color == 2) maze[floor][r][c].black = true;
+  maze[floor][r[floor][floor]][c[floor]].visited = true;
+  maze[floor][r[floor][floor]][c[floor]].direction = dir;
+  /*maze[floor][r[floor][floor]][c[floor]].hot = tempdx > 68 || tempsx > 60;*/
+  bool hotDx = tempDx >= DELTATEMP && distDx < DISTWALL;
+  bool hotSx = tempSx >= DELTATEMP && distSx < DISTWALL;
+  maze[floor][r[floor][floor]][c[floor]].hot = hotDx || hotSx;
+  if (color == 1) {
+    checkr = r[floor][floor];
+    checkc = c[floor];
+    checkfl = floor;
+  }else if(color == 2) maze[floor][r[floor][floor]][c[floor]].black = true;
 }
 
 void Matrix::changeFloor() {
-    floor = !floor;
+  floor = !floor;
 }
 
 bool Matrix::frontCheck() { /// Restituisce vero se la cella davanti al bot è già stata visitata
-    go();
-    bool ris = maze[floor][r][c].visited;
-    back();
-    return ris;
+  go();
+  bool ris = maze[floor][r[floor][floor]][c[floor]].visited;
+  back();
+  return ris;
 }
 
 bool Matrix::frontBlack() { /// Restituisce vero se la cella davanti al bot è nera
-    go();
-    bool ris = maze[floor][r][c].black;
-    back();
-    return ris;
+  go();
+  bool ris = maze[floor][r[floor][floor]][c[floor]].black;
+  back();
+  return ris;
 }
 
 void Matrix::reset() {
-    r = checkr;
-    c = checkc;
-    dir = maze[floor][r][c].direction;
+  r[floor][floor] = checkr;
+  c[floor] = checkc;
+  floor = checkfl;
+  dir = maze[floor][r[floor]][c[floor]].direction;
 }
 
 void Matrix::go() {
-    switch (dir) {
-        case 0:
-            r++;
-            break;
-        case 1:
-            c++;
-            break;
-        case 2:
-            r--;
-            break;
-        case 3:
-            c--;
-            break;
-    }
+  switch (dir) {
+    case 0:
+    r[floor]++;
+    break;
+    case 1:
+    c[floor]++;
+    break;
+    case 2:
+    r[floor]--;
+    break;
+    case 3:
+    c[floor]--;
+    break;
+  }
 }
 
 void Matrix::back() {
-    switch (dir) {
-        case 0:
-            r--;
-            break;
-        case 1:
-            c--;
-            break;
-        case 2:
-            r++;
-            break;
-        case 3:
-            c++;
-            break;
-    }
+  switch (dir) {
+    case 0:
+    r[floor]--;
+    break;
+    case 1:
+    c[floor]--;
+    break;
+    case 2:
+    r[floor]++;
+    break;
+    case 3:
+    c[floor]++;
+    break;
+  }
 }
 
 byte Matrix::getDir(float dx, float front, float sx) { /// Ritorna 1 per destra, 2 per avanti, 3 per sinistra, 4 dietro
@@ -92,7 +95,7 @@ byte Matrix::getDir(float dx, float front, float sx) { /// Ritorna 1 per destra,
   }else if(!frontCheck() && !frontBlack() && sx < DISTWALL){
     pdir = 3;
     dir = saved_dir;
-    maze[floor][r][c].direction = saved_dir;
+    maze[floor][r[floor]][c[floor]].direction = saved_dir;
     rotate(false);
   }else if(!frontBlack() && dx < DISTWALL){
     pdir = 1;
@@ -104,22 +107,22 @@ byte Matrix::getDir(float dx, float front, float sx) { /// Ritorna 1 per destra,
     pdir = 3;
   }
   dir = saved_dir;
-  maze[floor][r][c].direction = saved_dir;
+  maze[floor][r[floor]][c[floor]].direction = saved_dir;
   return dir;
 }
 
 void Matrix::rotate(bool direction) { /// Cambia direzione nella matrice (true = sinistra, false = destra)
-    if (direction)
-        dir = dir == 0 ? 3 : dir - 1;
-    else
-        dir = dir == 3 ? 0 : dir + 1;
-    maze[floor][r][c].direction = dir;
+  if (direction)
+  dir = dir == 0 ? 3 : dir - 1;
+  else
+  dir = dir == 3 ? 0 : dir + 1;
+  maze[floor][r[floor]][c[floor]].direction = dir;
 }
 
 bool Matrix::isHot() {
-    return maze[floor][r][c].hot;
+  return maze[floor][r[floor]][c[floor]].hot;
 }
 
 bool Matrix::isVisited() {
-    return maze[floor][r][c].visited;
+  return maze[floor][r[floor]][c[floor]].visited;
 }
