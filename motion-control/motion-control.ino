@@ -25,10 +25,10 @@ void rotationSpeed(bool direction , float endRotation){
   else mov.setK(40+((filter.getYaw()-endRotation)*rapportoVR),40+((filter.getYaw()-endRotation)*rapportoVR));
 }// negare la condizione se il filtro funziona in modo diverso
 
-void goStraight(bool invert){
+void goStraight(bool invert, float dritto){
   direzione = filter.getYaw();
-  if (filter.getYaw()< direzione)mov.setK(10,0);
-  else if(filter.getYaw() > direzione)mov.setK(0,10);
+  if (direzione< dritto)mov.setK((dritto-direzione)*2,0);
+  else if(direzione > dritto)mov.setK(0,(direzione-dritto)*2);
 }
 
 float endAngle(float n, bool s){
