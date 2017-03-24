@@ -22,8 +22,8 @@ void Moviment::rotate() {
 }
 
 void Moviment::rotate(bool invert) {
-  motorR->start(bound((speed + kR) * 2, 255), !invert);
-  motorL->start(bound((speed + kL) * 2, 255), invert);
+  motorR->start(bound((speed + kR) , 255), !invert);
+  motorL->start(bound((speed + kL) , 255), invert);
 }
 
 void Moviment::stop() {
