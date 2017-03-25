@@ -3,12 +3,12 @@
 
 #include "Motor.h"
 
-#define R_EN 4
-#define R_IN1 2
-#define R_IN2 3
-#define L_EN 7
-#define L_IN1 6
-#define L_IN2 5
+#define R_EN 3
+#define R_IN1 4
+#define R_IN2 5
+#define L_EN 6
+#define L_IN1 7
+#define L_IN2 8
 
 class Moviment {
   public:
