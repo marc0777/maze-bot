@@ -44,30 +44,6 @@ void Moviment::setK(byte rightK, byte leftK) {
   kL = leftK;
 }
 
-void Moviment::set(byte state) {
-  switch (state) {
-    case 0:
-      stop();
-      break;
-    case 1:
-      go(false);
-      break;
-    case 2:
-      rotate(false);
-      break;
-    case 3:
-      go(true);
-      break;
-    case 4:
-      rotate(true);
-      break;
-  }
-}
-
-byte Moviment::get() {
-  return state;
-}
-
 short Moviment::bound(short n, short max) {
   return (n > max) ? max : n;
 }

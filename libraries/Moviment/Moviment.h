@@ -26,8 +26,6 @@ class Moviment {
     void stop();
     void setSpeed(byte speed);
     void setK(byte rightK, byte leftK);
-    void set(byte state);
-    byte get();
   private:
     short bound (short n, short max);
     Motor motorFR = Motor(FL_EN, FL_IN1, FL_IN2);
@@ -37,6 +35,5 @@ class Moviment {
     byte speed;
     byte kR;
     byte kL;
-    byte state;
 };
 #endif
