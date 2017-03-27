@@ -1,9 +1,7 @@
 #include "Moviment.h"
 
-Moviment::Moviment (byte speed, byte rightK, byte leftK) {
-  motorL = new Motor(L_EN, L_IN1, L_IN2);
-  motorR = new Motor(R_EN, R_IN1, R_IN2);
-  this->speed = speed;
+Moviment::Moviment (byte velocity, byte rightK, byte leftK) {
+  speed = velocity;
   kR = rightK;
   kL = leftK;
 }
@@ -13,8 +11,10 @@ void Moviment::go() {
 }
 
 void Moviment::go(bool invert) {
-  motorR->start(bound(speed + kR, 255), !invert);
-  motorL->start(bound(speed + kL, 255), !invert);
+  motorFR.start(bound(speed + kR, 255), !invert);
+  motorFL.start(bound(speed + kL, 255), !invert);
+  motorRR.start(bound(speed + kR, 255), !invert);
+  motorRL.start(bound(speed + kL, 255), !invert);
 }
 
 void Moviment::rotate() {
@@ -22,17 +22,21 @@ void Moviment::rotate() {
 }
 
 void Moviment::rotate(bool invert) {
-  motorR->start(bound((speed + kR) , 255), !invert);
-  motorL->start(bound((speed + kL) , 255), invert);
+  motorFR.start(bound((speed + kR) , 255), !invert);
+  motorFL.start(bound((speed + kL) , 255), invert);
+  motorRR.start(bound((speed + kR) , 255), !invert);
+  motorRL.start(bound((speed + kL) , 255), invert);
 }
 
 void Moviment::stop() {
-  motorR->stop();
-  motorL->stop();
+  motorFR.stop();
+  motorFL.stop();
+  motorRR.stop();
+  motorRL.stop();
 }
 
-void Moviment::setSpeed(byte speed) {
-  this->speed = speed;
+void Moviment::setSpeed(byte velocity) {
+  speed = velocity;
 }
 
 void Moviment::setK(byte rightK, byte leftK) {

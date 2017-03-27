@@ -3,12 +3,18 @@
 
 #include "Motor.h"
 
-#define R_EN 3
-#define R_IN1 4
-#define R_IN2 5
-#define L_EN 6
-#define L_IN1 7
-#define L_IN2 8
+#define FR_EN 3
+#define FR_IN1 4
+#define FR_IN2 5
+#define FL_EN 6
+#define FL_IN1 7
+#define FL_IN2 8
+#define RR_EN 9
+#define RR_IN1 10
+#define RR_IN2 11
+#define RL_EN 12
+#define RL_IN1 13
+#define RL_IN2 14
 
 class Moviment {
   public:
@@ -24,9 +30,11 @@ class Moviment {
     byte get();
   private:
     short bound (short n, short max);
-    Motor *motorR;
-    Motor *motorL;
-    short speed;
+    Motor motorFR = Motor(FL_EN, FL_IN1, FL_IN2);
+    Motor motorFL = Motor(FR_EN, FR_IN1, FR_IN2);
+    Motor motorRR = Motor(RL_EN, RL_IN1, RL_IN2);
+    Motor motorRL = Motor(RR_EN, RR_IN1, RR_IN2);
+    byte speed;
     byte kR;
     byte kL;
     byte state;
