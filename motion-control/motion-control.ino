@@ -1,48 +1,54 @@
 #include <Arduino.h>
-#include <MadgwickAHRS.h>
 #include <Wire.h>
 #include <Moviment.h>
-#include <L3G4200D.h>
-#include <ADXL345.h>
+#include <IMU.h>
 
 #define ADDRESS 7
-#define REFRESH 50
-
-const unsigned long microsPerReading = 1000000 / REFRESH;
-unsigned long microsPrevious;
 float rapportoVR = 60 / 90; //deltaV/deltaR
 float direzione = 0;
 byte state = 0;
 
 Moviment mov(100, 0, 0);
-L3G4200D gyroscope;
-ADXL345 acc;
-Madgwick filter;
+IMU orientation;
 
 void receiveEvent(int howMany) {
   state = Wire.read();
-  mov.set(state);
+  switch (state) {
+    case 0:
+      mov.stop();
+      break;
+    case 1:
+      goStraight(false);
+      break;
+    case 2:
+      mov.rotate(false);
+      break;
+    case 3:
+      goStraight(true);
+      break;
+    case 4:
+      mov.rotate(true);
+      break;
+  }
 }
 
 void requestEvent() {
-  Wire.write(mov.get());
+  Wire.write(state);
 }
 
-
 void rotationSpeed(bool direction , float endRotation) {
-  if (direction)mov.setK(40 + ((endRotation - filter.getYaw())*rapportoVR), 40 + ((endRotation - filter.getYaw())*rapportoVR));
-  else mov.setK(40 + ((filter.getYaw() - endRotation)*rapportoVR), 40 + ((filter.getYaw() - endRotation)*rapportoVR));
+  direzione = orientation.yaw();
+  if (direction) mov.setK(40 + ((endRotation - direzione)*rapportoVR), 40 + ((endRotation - direzione)*rapportoVR));
+  else mov.setK(40 + ((direzione - endRotation)*rapportoVR), 40 + ((direzione - endRotation)*rapportoVR));
 }// negare la condizione se il filtro funziona in modo diverso
 
-void goStraight(bool invert, float dritto) {
-  start();
+void goStraight(bool invert) {
+  orientation.start();
+  mov.go(invert);
   while(state==1) {
-    unsigned long microsNow;
-    microsNow = micros();
-    if (microsNow - microsPrevious >= microsPerReading) update();
-    direzione = filter.getYaw();
-    if (direzione < dritto)mov.setK((dritto - direzione) * 2, 0);
-    else if (direzione > dritto)mov.setK(0, (direzione - dritto) * 2);
+    direzione = orientation.yaw();
+    if (direzione < 0) mov.setK(-direzione * 2, 0);
+    else if (direzione > 0) mov.setK(0, direzione * 2);
   }
 }
 
@@ -59,34 +65,13 @@ float endAngle(float n, bool s) {
   }
 }
 
-void begin() {
-  gyroscope.begin(L3G4200D_SCALE_250DPS, L3G4200D_DATARATE_100HZ_12_5);
-  acc.begin();
-}
-
-void calibrate() {
-  gyroscope.calibrate(255);
-}
-
-void start() {
-  filter.begin(REFRESH);
-  microsPrevious = micros();
-}
-
-void update() {
-  acc.read();
-  gyroscope.read();
-  filter.update(gyroscope.x, gyroscope.y, gyroscope.z, acc.x, acc.y, acc.z);
-  microsPrevious+=microsPerReading;
-}
-
 void setup() {
   Wire.begin(ADDRESS);
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
-  begin();
+  orientation.begin();
   delay(100);
-  calibrate();
+  orientation.calibrate();
   delay(100);
 }
 
