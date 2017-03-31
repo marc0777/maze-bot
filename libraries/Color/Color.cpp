@@ -11,11 +11,11 @@ Color::Color(){
   digitalWrite(S1,LOW);
 }
 
-Color::read(){
+bool Color::read(){
   // Setting red filtered photodiodes to be read
   digitalWrite(S2,LOW);
   digitalWrite(S3,LOW);
   // Reading the output frequency
   int R = pulseIn(sensorOut, LOW);
-  return R < 100
+  return R < 100;
 }
