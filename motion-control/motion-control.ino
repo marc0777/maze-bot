@@ -2,8 +2,21 @@
 #include <Wire.h>
 #include <Moviment.h>
 #include <IMU.h>
+#include <PID_v1.h>
 
 #define ADDRESS 7
+#define OUT_MIN 100
+#define OUT_MAX 255
+
+double Setpoint=0, inputPID=0, outputPID=0;//copiato dall'esempio della libreria del PID
+double Kp=2, Ki=5, Kd=1;//valori di default del PID da mettere a posto
+PID pid(&inputPID, &outputPID, &Setpoint, Kp, Ki, Kd, DIRECT);  //inizializzazione dell'oggetto PID copiato senza capire cos'è il DIRECT
+                                                            //che non è stato trovato da nessuna parte, ma stranamente compila
+                                                            //l'input e l'output sono le variabili dove bisognerà assegnare il valore 
+                                                            //letto il Setpoint è la variabile di riferimento, le tre costanti sono i 
+                                                            //parametri da mettere apposto.
+
+
 float rapportoVR = 60 / 90; //deltaV/deltaR
 float direzione = 0;
 byte state = 0;
@@ -52,6 +65,20 @@ void goStraight(bool invert) {
   }
 }
 
+void goStraightPID(bool invert) {
+  orientation.start();
+  mov.go(invert);
+  while(state==1) {
+    direzione = orientation.yaw();
+    inputPID=direzione;
+    pid.Conpute();
+    if (direzione < 0) mov.setK(outputPID, -outputPID);
+    else if (direzione > 0) mov.setK(-outputPID,pitoutPID);
+  }
+}
+
+
+
 float endAngle(float n, bool s) {
   if (s) {
     n += 90;
@@ -73,6 +100,7 @@ void setup() {
   delay(100);
   orientation.calibrate();
   delay(100);
+  pid.SetOutputLimits(OUT_MIN,OUT_MAX);
 }
 
 void loop() {
