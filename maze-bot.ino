@@ -89,6 +89,7 @@ void setup() {
   pinMode(INTERRUPT, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(INTERRUPT), pause, FALLING);
   for (int i = 0; i < 2; i++) temps[i].begin();
+  Straight();
 }
 
 void loop() {
