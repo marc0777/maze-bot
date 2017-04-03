@@ -8,7 +8,7 @@
 #define OUT_MIN 100
 #define OUT_MAX 255
 
-double Setpoint=0, inputPID=0, outputPID=0;//copiato dall'esempio della libreria del PID
+double Setpoint=inputPID=outputPID=0;//copiato dall'esempio della libreria del PID
 double Kp=2, Ki=5, Kd=1;//valori di default del PID da mettere a posto
 PID pid(&inputPID, &outputPID, &Setpoint, Kp, Ki, Kd, DIRECT);  //inizializzazione dell'oggetto PID copiato senza capire cos'è il DIRECT
                                                             //che non è stato trovato da nessuna parte, ma stranamente compila
@@ -77,18 +77,14 @@ void goStraightPID(bool invert) {
   }
 }
 
-
-
 float endAngle(float n, bool s) {
   if (s) {
     n += 90;
-    if (n > 360)return n - 360;
-    else return n;
+    return (n > 360)?n-360:n;
   }
   else {
     n -= 90;
-    if (n < 0)return n + 360;
-    else return n;
+    return (n < 0)?n+360:n;
   }
 }
 
