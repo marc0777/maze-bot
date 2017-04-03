@@ -1,7 +1,7 @@
 # maze-bot
 Projects and code for the robot made for the maze solving competition Robocup Jr 2017.
 
-### Todo
+## Todo
 
 By Thursday:
 - [ ] Turn on a LED when a victim has found
@@ -13,7 +13,7 @@ Long term:
 - [ ] Debug over bluetooth
 - [ ] Desktop GUI for testing
 
-# Notes
+## Notes
 
 To import libraries to your IDE you have to create a symlink from this repository to your Arduino libraries folder. To do that you need first to delete the defalut arduino libraries folder, then to open an administrator command prompt and give the following command:
 
