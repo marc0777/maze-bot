@@ -14,6 +14,9 @@
 #define US_DIETRO 2
 #define US_SINISTRA 3
 
+#define inclination 0
+//TODO aggiungere una funzione che ritorni l'inclinazione
+
 Motion mov;
 Matrix mat; // Matrice che rappresenta il maze
 ColorIR color; // Sensore di colore
@@ -30,19 +33,19 @@ DistanceUS ultrasonic[4] = {DistanceUS(44, 45, 5, 93), DistanceUS(46, 47, 5, 93)
 Temperature temps[2] = {Temperature(0x5A), Temperature(0x5C)}; // Sensori temperatura 5A sinistra, 5C destra
 
 bool dritto(){
-  return (abs(ulatrasonic[US_AVANTI].read()-ulatrasonic[US_DIETRO].read())<1;
+  return (abs(ultrasonic[US_AVANTI].read()-ultrasonic[US_DIETRO].read()))<1;
 }
 
 void Straight(){
   if(!dritto()){
     mov.rotate(true,true);
     while(dritto());
-    mov.stop;
+    mov.stop();
   }
 }
-          
+
 void drive() {  /// Funzione che guida tutto
-  mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[0].read(), ultrasonic[2].read(), color.read());
+  mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[0].read(), ultrasonic[2].read(), inclination, color.read());
   switch (mat.getDir(ultrasonic[0].read(), ultrasonic[3].read(), ultrasonic[2].read())) {
     case 1 :
       mat.rotate(false);
@@ -67,7 +70,7 @@ void drive() {  /// Funzione che guida tutto
     if (color.read() == 2) {
       mov.stop();
       //mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[0].read(), ultrasonic[2].read(), color.read());
-      mat.check(0, 0, 0, 0, color.read());
+      mat.check(0, 0, 0, 0, 0, color.read());
       mat.back();
       //TODO andare indietro fino al centro della casella
     }

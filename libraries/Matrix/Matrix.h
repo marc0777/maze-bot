@@ -10,7 +10,7 @@ class Matrix {
 public:
   Matrix();
 
-  void check(float tempDx, float tempSx, float distDx, float distSx, byte color);
+  void check(float tempDx, float tempSx, float distDx, float distSx, float inclination, byte color);
 
   void changeFloor();
 
@@ -25,7 +25,7 @@ public:
   void back();
 
   byte getDir(float dx, float front, float sx);  /// Ritorna 1 per destra, 2 per avanti, 3 per sinistra, 4 dietro
-  
+
   void rotate(bool direction);
 
   bool isHot();
@@ -36,7 +36,6 @@ private:
   typedef struct {
     bool visited;
     bool hot;
-    bool rise;
     bool black;
     byte direction;
   } cell;
@@ -50,6 +49,7 @@ private:
   byte checkr;
   byte checkc;
   byte checkfl;
+  bool rise;
 };
 
 #endif //MATRIX_H

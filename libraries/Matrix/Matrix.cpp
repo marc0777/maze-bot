@@ -6,20 +6,30 @@ Matrix::Matrix() {
   r[0] = r[1] = c[0] = c[1] = 8;
   floor = 0;
   dir = 0;
+  rise = false;
 }
 
-void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, byte color) { /// Controlla lo stato della cella
-  maze[floor][r[floor]][c[floor]].visited = true;
-  maze[floor][r[floor]][c[floor]].direction = dir;
-  /*maze[floor][r[floor]][c[floor]].hot = tempdx > 68 || tempsx > 60;*/
-  bool hotDx = tempDx >= DELTATEMP && distDx < DISTWALL;
-  bool hotSx = tempSx >= DELTATEMP && distSx < DISTWALL;
-  maze[floor][r[floor]][c[floor]].hot = hotDx || hotSx;
-  if (color == 1) {
-    checkr = r[floor];
-    checkc = c[floor];
-    checkfl = floor;
-  }else if(color == 2) maze[floor][r[floor]][c[floor]].black = true;
+void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, float inclination, byte color) { /// Controlla lo stato della cella
+  if(inclination >= 10 || inclination <= -10){
+    if(!rise){
+      back();
+      floor = !floor;
+    }
+    rise = true;
+  }else rise = false;
+  if(!rise){
+    maze[floor][r[floor]][c[floor]].visited = true;
+    maze[floor][r[floor]][c[floor]].direction = dir;
+    /*maze[floor][r[floor]][c[floor]].hot = tempdx > 68 || tempsx > 60;*/
+    bool hotDx = tempDx >= DELTATEMP && distDx < DISTWALL;
+    bool hotSx = tempSx >= DELTATEMP && distSx < DISTWALL;
+    maze[floor][r[floor]][c[floor]].hot = hotDx || hotSx;
+    if (color == 1) {
+      checkr = r[floor];
+      checkc = c[floor];
+      checkfl = floor;
+    }else if(color == 2) maze[floor][r[floor]][c[floor]].black = true;
+  }
 }
 
 void Matrix::changeFloor() {
@@ -48,19 +58,21 @@ void Matrix::reset() {
 }
 
 void Matrix::go() {
-  switch (dir) {
-    case 0:
-    r[floor]++;
-    break;
-    case 1:
-    c[floor]++;
-    break;
-    case 2:
-    r[floor]--;
-    break;
-    case 3:
-    c[floor]--;
-    break;
+  if (!rise) {
+    switch (dir) {
+      case 0:
+      r[floor]++;
+      break;
+      case 1:
+      c[floor]++;
+      break;
+      case 2:
+      r[floor]--;
+      break;
+      case 3:
+      c[floor]--;
+      break;
+    }
   }
 }
 
