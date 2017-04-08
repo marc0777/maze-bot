@@ -32,6 +32,6 @@ void Cell::black() {
 	data|=1;
 }
 
-void Cell::direction(data dir) {
+void Cell::direction(byte dir) {
 	data|=dir<<5;
 }

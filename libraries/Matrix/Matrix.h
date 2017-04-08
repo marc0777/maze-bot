@@ -2,6 +2,7 @@
 #define MATRIX_H
 
 #include <Arduino.h>
+#include "Cell.h"
 
 #define DELTATEMP 10
 #define DISTWALL 10
@@ -33,17 +34,17 @@ public:
   bool isVisited();
 
 private:
-  typedef struct {
-    bool visited;
-    bool hot;
-    bool black;
-    byte direction;
-  } cell;
-  cell maze[2][19][19];
+  // typedef struct {
+  //   bool visited;
+  //   bool hot;
+  //   bool black;
+  //   byte direction;
+  // } cell;
+  Cell maze[2][19][19];
   bool floor;
   // Posizione attuale
   byte r[2];
-  byte  c[2];
+  byte c[2];
   byte dir; // 0 = nord, 1 = est, 2 = sud, 3 = ovest
   // Coordinate dell'ultimo checkpoint
   byte checkr;

@@ -1,6 +1,8 @@
 #ifndef Cell_h
 #define Cell_h
 
+#include <Arduino.h>
+
 class Cell {
 	private:
 		byte data;
