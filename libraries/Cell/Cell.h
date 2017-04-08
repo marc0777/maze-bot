@@ -3,7 +3,7 @@
 
 class Cell {
 	private:
-		bool data;
+		byte data;
 	public:
 		Cell();
 		bool isVisited();

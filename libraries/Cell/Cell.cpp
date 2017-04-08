@@ -5,33 +5,33 @@ Cell::Cell() {
 }
 
 bool Cell::isVisited() {
-	return byte & (1<<2);
+	return data & (1<<2);
 }
 
 bool Cell::isHot() {
-	return byte & (1<<1);
+	return data & (1<<1);
 }
 
 bool Cell::isBlack() {
-	return byte & 1;
+	return data & 1;
 }
 
 byte Cell::getDirection() {
-	return byte & (7<<5);
+	return data & (7<<5);
 }
 
 void Cell::visited() {
-	byte|=1<<2;
+	data|=1<<2;
 }
 
 void Cell::hot() {
-	byte|=1<<1;
+	data|=1<<1;
 }
 
 void Cell::black() {
-	byte|=1;
+	data|=1;
 }
 
-void Cell::direction(byte dir) {
-	byte|=dir<<5;
+void Cell::direction(data dir) {
+	data|=dir<<5;
 }
