@@ -97,25 +97,35 @@ byte Matrix::getDir(float dx, float front, float sx) { /// Ritorna 1 per destra,
   byte saved_dir = dir;
   byte pdir = 4;
   rotate(false);
-  if(!frontCheck() && !frontBlack() && dx > DISTWALL){
+  if (!frontCheck() && !frontBlack() && dx > DISTWALL) {
     pdir = 1;
+  } else {
     rotate(true);
-  }else if (!frontCheck() && !frontBlack() && front > DISTWALL){
-    pdir = 2;
-    rotate(true);
-  }else if(!frontCheck() && !frontBlack() && sx > DISTWALL){
-    pdir = 3;
-    dir = saved_dir;
-    maze[floor][r[floor]][c[floor]].direction(saved_dir);
-    rotate(false);
-  }else if(!frontBlack() && dx > DISTWALL){
-    pdir = 1;
-    rotate(true);
-  }else if (!frontBlack() && front > DISTWALL){
-    pdir = 2;
-    rotate(true);
-  }else if(!frontBlack() && sx > DISTWALL){
-    pdir = 3;
+    if (!frontCheck() && !frontBlack() && front > DISTWALL) {
+      pdir = 2;
+    } else {
+      rotate(true);
+      if (!frontCheck() && !frontBlack() && sx > DISTWALL) {
+        pdir = 3;
+        dir = saved_dir;
+        maze[floor][r[floor]][c[floor]].direction(saved_dir);
+        rotate(false);
+      } else {
+        if (!frontBlack() && dx > DISTWALL) {
+          pdir = 1;
+        } else {
+          rotate(true);
+          if (!frontBlack() && front > DISTWALL) {
+            pdir = 2;
+          } else {
+            rotate(true);
+            if (!frontBlack() && sx > DISTWALL) {
+              pdir = 3;
+            }
+          }
+        }
+      }
+    }
   }
   dir = saved_dir;
   maze[floor][r[floor]][c[floor]].direction(saved_dir);
