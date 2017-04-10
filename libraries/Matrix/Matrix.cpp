@@ -61,13 +61,13 @@ void Matrix::go() {
   if (!rise) {
     switch (dir) {
       case 0:
-      r[floor]++;
+      r[floor]--;
       break;
       case 1:
       c[floor]++;
       break;
       case 2:
-      r[floor]--;
+      r[floor]++;
       break;
       case 3:
       c[floor]--;
@@ -79,13 +79,13 @@ void Matrix::go() {
 void Matrix::back() {
   switch (dir) {
     case 0:
-    r[floor]--;
+    r[floor]++;
     break;
     case 1:
     c[floor]--;
     break;
     case 2:
-    r[floor]++;
+    r[floor]--;
     break;
     case 3:
     c[floor]++;
