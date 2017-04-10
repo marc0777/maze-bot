@@ -1,12 +1,17 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#include <fstream>
+#include <iostream>
+
+using namespace std;
 #define byte int
 
 #include "Cell.h"
 
 #define DELTATEMP 10
 #define DISTWALL 10
+#define NCELLS 31
 
 class Matrix {
 public:
@@ -34,6 +39,10 @@ public:
 
     bool isVisited();
 
+    void printMaze(string file);
+
+    bool keep;
+
 private:
     // typedef struct {
     //   bool visited;
@@ -52,6 +61,7 @@ private:
     byte checkc;
     byte checkfl;
     bool rise;
+    int cont;
 };
 
 #endif //MATRIX_H

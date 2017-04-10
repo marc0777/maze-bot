@@ -3,6 +3,9 @@
 
 #define byte int
 
+#include <iostream>
+
+using namespace std;
 class Cell {
 private:
     byte data;
@@ -24,6 +27,12 @@ public:
     void black();
 
     void direction(byte dir);
+
+    void checkPoint();
+
+    bool isCheckPoint();
+
+    string toString();
 };
 
 #endif

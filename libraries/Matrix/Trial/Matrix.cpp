@@ -1,7 +1,4 @@
 #include "Matrix.h"
-#include <iostream>
-
-using namespace std;
 
 Matrix::Matrix() {
 
@@ -10,10 +7,13 @@ Matrix::Matrix() {
     floor = 0;
     dir = 0;
     rise = false;
+    keep = true;
+    cont = 0;
 }
 
 void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, float inclination,
                    byte color) { /// Controlla lo stato della cella
+    if (!maze[floor][r[floor]][c[floor]].isVisited()) cont++;
     if (inclination >= 10 || inclination <= -10) {
         if (!rise) {
             back();
@@ -28,13 +28,15 @@ void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, float
         bool hotDx = tempDx >= DELTATEMP && distDx < DISTWALL;
         bool hotSx = tempSx >= DELTATEMP && distSx < DISTWALL;
         if (hotDx || hotSx) maze[floor][r[floor]][c[floor]].hot();
-        if (color == 1) {
+        if (color == 1 && !maze[floor][r[floor]][c[floor]].isCheckPoint()) {
+            maze[floor][r[floor]][c[floor]].checkPoint();
             checkr = r[floor];
             checkc = c[floor];
             checkfl = floor;
             cout << "Checkpoint rilevato" << endl;
         } else if (color == 2) maze[floor][r[floor]][c[floor]].black();
     }
+    keep = cont < NCELLS || !(floor == 0 && r[floor] == 8 && c[floor] == 8);
 }
 
 void Matrix::changeFloor() {
@@ -59,7 +61,6 @@ void Matrix::reset() {
     r[floor] = checkr;
     c[floor] = checkc;
     floor = checkfl;
-    dir = maze[floor][r[floor]][c[floor]].getDirection();
 }
 
 void Matrix::go() {
@@ -151,4 +152,17 @@ bool Matrix::isHot() {
 
 bool Matrix::isVisited() {
     return maze[floor][r[floor]][c[floor]].isVisited();
+}
+
+void Matrix::printMaze(string file) {
+    ofstream out(file);
+    for (int i = 0; i < 19; i++) {
+        for (int j = 0; j < 19; j++) {
+            if (i == 8 && j == 8) out << "S";
+            else if (maze[floor][i][j].toString() != "") {
+                out << maze[floor][i][j].toString();
+            } else out << "#";
+        }
+        out << endl;
+    }
 }
