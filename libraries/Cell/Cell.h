@@ -4,17 +4,29 @@
 #include <Arduino.h>
 
 class Cell {
-	private:
-		byte data;
-	public:
-		Cell();
-		bool isVisited();
-		bool isHot();
-		bool isBlack();
-		byte getDirection();
-		void visited();
-		void hot();
-		void black();
-		void direction(byte dir);
+private:
+	byte data;
+public:
+	Cell();
+
+	bool isVisited();
+
+	bool isHot();
+
+	bool isBlack();
+
+	byte getDirection();
+
+	void visited();
+
+	void hot();
+
+	void black();
+
+	void direction(byte dir);
+
+	void checkPoint();
+
+	bool isCheckPoint();
 };
 #endif

@@ -51,6 +51,7 @@ private:
   byte checkc;
   byte checkfl;
   bool rise;
+  int cont;
 };
 
 #endif //MATRIX_H
