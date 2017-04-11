@@ -123,11 +123,8 @@ float readSX() {
 int main() {
     Matrix m;
     do {
-        cout << r << "  " << c << endl;
         m.check(0, 0, readDX(), readSX(), 0, readCol());
-        byte dr = m.getDir(readDX(), readAv(), readSX());
-        cout << dr << endl;
-        switch (dr) {
+        switch (m.getDir(readDX(), readAv(), readSX())) {
             case 1 :
                 m.rotate(false);
                 rotate(false);

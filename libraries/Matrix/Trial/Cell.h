@@ -9,6 +9,7 @@ using namespace std;
 class Cell {
 private:
     byte data;
+
 public:
     Cell();
 

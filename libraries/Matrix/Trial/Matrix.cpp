@@ -33,7 +33,6 @@ void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, float
             checkr = r[floor];
             checkc = c[floor];
             checkfl = floor;
-            cout << "Checkpoint rilevato" << endl;
         } else if (color == 2) maze[floor][r[floor]][c[floor]].black();
     }
     keep = cont < NCELLS || !(floor == 0 && r[floor] == 8 && c[floor] == 8);
@@ -80,6 +79,7 @@ void Matrix::go() {
                 break;
         }
     }
+    keep = cont < NCELLS || !(floor == 0 && r[floor] == 8 && c[floor] == 8);
 }
 
 void Matrix::back() {
@@ -113,10 +113,10 @@ byte Matrix::getDir(float dx, float front, float sx) { /// Ritorna 1 per destra,
             rotate(true);
             if (!frontCheck() && !frontBlack() && sx > DISTWALL) {
                 pdir = 3;
+            } else { // giusto
                 dir = saved_dir;
                 maze[floor][r[floor]][c[floor]].direction(saved_dir);
                 rotate(false);
-            } else {
                 if (!frontBlack() && dx > DISTWALL) {
                     pdir = 1;
                 } else {
