@@ -1,9 +1,7 @@
 #include "Matrix.h"
 
 Matrix::Matrix() {
-
-  // parto dal centro
-  r[0] = r[1] = c[0] = c[1] = 8;
+  r[0] = r[1] = c[0] = c[1] = 8; // Both fool start from the center
   floor = 0;
   dir = 0;
   rise = false;
@@ -11,7 +9,7 @@ Matrix::Matrix() {
   cont = 0;
 }
 
-void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, float inclination, byte color) { /// Controlla lo stato della cella
+void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, float inclination, byte color) {
     if (!maze[floor][r[floor]][c[floor]].isVisited()) cont++;
     if (inclination >= 10 || inclination <= -10) {
       if (!rise) {
@@ -23,7 +21,6 @@ void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, float
     if (!rise) {
       maze[floor][r[floor]][c[floor]].visited();
       maze[floor][r[floor]][c[floor]].direction(dir);
-      /*maze[floor][r[floor]][c[floor]].hot = tempdx > 68 || tempsx > 60;*/
       bool hotDx = tempDx >= DELTATEMP && distDx < DISTWALL;
       bool hotSx = tempSx >= DELTATEMP && distSx < DISTWALL;
       if (hotDx || hotSx) maze[floor][r[floor]][c[floor]].hot();
@@ -41,14 +38,14 @@ void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, float
     floor = !floor;
   }
 
-  bool Matrix::frontCheck() { /// Restituisce vero se la cella davanti al bot è già stata visitata
+  bool Matrix::frontCheck() {
     go();
     bool ris = maze[floor][r[floor]][c[floor]].isVisited();
     back();
     return ris;
   }
 
-  bool Matrix::frontBlack() { /// Restituisce vero se la cella davanti al bot è nera
+  bool Matrix::frontBlack() {
     go();
     bool ris = maze[floor][r[floor]][c[floor]].isBlack();
     back();
@@ -98,7 +95,7 @@ void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, float
     }
   }
 
-  byte Matrix::getDir(float dx, float front, float sx) { /// Ritorna 1 per destra, 2 per avanti, 3 per sinistra, 4 dietro
+  byte Matrix::getDir(float dx, float front, float sx) { // 1 = rigth, 2 = front, 3 = left, 4 = back
     byte saved_dir = dir;
     byte pdir = 4;
     rotate(false);
@@ -137,7 +134,7 @@ void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, float
     return pdir;
   }
 
-  void Matrix::rotate(bool direction) { /// Cambia direzione nella matrice (true = sinistra, false = destra)
+  void Matrix::rotate(bool direction) { // Change the direction, true = left, false = rigth)
     if (direction)
     dir = dir == 0 ? 3 : dir - 1;
     else

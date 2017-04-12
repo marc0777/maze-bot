@@ -4,58 +4,52 @@
 #include <Arduino.h>
 #include "Cell.h"
 
-#define DELTATEMP 10
-#define DISTWALL 10
-#define NCELLS 31
+#define DELTATEMP 10 // Delta minima di temperatorua perchè la parete sia calda
+#define DISTWALL 10 // Distanza massima del robot dal muro vicino
+#define NCELLS 31 // Numero totale di celle nel maze
 
 class Matrix {
 public:
     Matrix();
 
-    /// Check the status of the cell (black, hot, checkpoint...)
+    /* Check the status of the cell (black, hot, checkpoint...)*/
     void check(float tempDx, float tempSx, float distDx, float distSx, float inclination, byte color);
-    /// Change the floor of the matrix
+    /* Change the floor of the matrix
     void changeFloor();
-    /// Return true if the cell in front of the robot is already visited
+    /* Returns true if the cell in front of the robot is already visited*/
     bool frontCheck();
-    /// Return true if the cell in front of the robot is black
+    /* Returns true if the cell in front of the robot is black*/
     bool frontBlack();
-    /// Move the position to the latest checkpoint
+    /* Move the position to the latest checkpoint*/
     void reset();
-
+    /* Move the cursor in the cell in front of the robot */
     void go();
-
+    /* Move the cursor in the cell behind the robot */
     void back();
-
-    byte getDir(float dx, float front, float sx);  /// Ritorna 1 per destra, 2 per avanti, 3 per sinistra, 4 dietro
-
+    /* Returns the best direction */
+    byte getDir(float dx, float front, float sx); // Ritorns 1 for indicate the rigth, 2 for the front, 3 for the left, 4 for the black
+    /* Rotate the matrix cursor */
     void rotate(bool direction);
-
+    /* Returns true if the current cell is hot */
     bool isHot();
-
+    /* Returns true if the current cell is already visited */
     bool isVisited();
 
-    bool keep;
+    bool keep; // This variable become false when the robot has finished the maze
 
 private:
-    // typedef struct {
-    //   bool visited;
-    //   bool hot;
-    //   bool black;
-    //   byte direction;
-    // } cell;
     Cell maze[2][19][19];
     bool floor;
     // Posizione attuale
     byte r[2];
     byte c[2];
     byte dir; // 0 = nord, 1 = est, 2 = sud, 3 = ovest
-    // Coordinate dell'ultimo checkpoint
+    // Latest checkpoint coordinates
     byte checkr;
     byte checkc;
     byte checkfl;
-    bool rise;
-    int cont;
+    bool rise; // True while the robot is rising
+    int cont; // Visited cells counter
 };
 
 #endif //MATRIX_H
