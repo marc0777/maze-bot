@@ -3,18 +3,18 @@
 
 #include "Motor.h"
 
-#define FR_EN 3
-#define FR_IN1 4
-#define FR_IN2 5
-#define FL_EN 6
-#define FL_IN1 7
-#define FL_IN2 8
+#define FR_EN 10
+#define FR_IN1 8
+#define FR_IN2 11
+#define FL_EN 5
+#define FL_IN1 2
+#define FL_IN2 3
 #define RR_EN 9
-#define RR_IN1 10
-#define RR_IN2 11
-#define RL_EN 12
-#define RL_IN1 13
-#define RL_IN2 14
+#define RR_IN1 12
+#define RR_IN2 13
+#define RL_EN 6
+#define RL_IN1 7
+#define RL_IN2 4
 
 class Moviment {
   public:
