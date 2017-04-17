@@ -10,7 +10,7 @@ By Thursday:
 
 Long term:
 - [ ] Debug in every object with a define in maze-bot.ino
-- [ ] Debug over bluetooth
+- [x] Debug over bluetooth
 - [ ] Desktop GUI for testing
 
 ## Notes
