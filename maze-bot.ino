@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <ColorIR.h>
-#include <DistanceIR.h>
 #include <Matrix.h>
 #include <Temperature.h>
 #include <DistanceUS.h>
@@ -20,11 +19,6 @@
 Motion mov;
 Matrix mat; // Matrice che rappresenta il maze
 ColorIR color; // Sensore di colore
-// Sensori di distanza
-DistanceIR infrared[8] = {DistanceIR(A0, 25, 93), DistanceIR(A1, 25, 93), DistanceIR(A2, 25, 93),
-  DistanceIR(A3, 25, 93), DistanceIR(A4, 25, 93), DistanceIR(A5, 25, 93),
-  DistanceIR(A6, 25, 93), DistanceIR(A7, 25, 93)
-};
 // usltrasonic[n] : n = : 0 = destra, 1 = dietro, 2 = sinistra, 3 = avanti
 DistanceUS ultrasonic[4] = {DistanceUS(44, 45, 5, 93), DistanceUS(46, 47, 5, 93), DistanceUS(48, 49, 5, 93),
   DistanceUS(50, 51, 5, 93)
@@ -32,14 +26,14 @@ DistanceUS ultrasonic[4] = {DistanceUS(44, 45, 5, 93), DistanceUS(46, 47, 5, 93)
 
 Temperature temps[2] = {Temperature(0x5A), Temperature(0x5C)}; // Sensori temperatura 5A sinistra, 5C destra
 
-bool dritto(){
+bool isStraight(){
   return (abs(ultrasonic[US_AVANTI].read()-ultrasonic[US_DIETRO].read()))<1;
 }
 
-void Straight(){
+void straightens(){
   if(!dritto()){
     mov.rotate(true,true);
-    while(dritto());
+    while(!dritto());
     mov.stop();
   }
 }
@@ -94,7 +88,7 @@ void setup() {
   pinMode(INTERRUPT, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(INTERRUPT), pause, FALLING);
   for (int i = 0; i < 2; i++) temps[i].begin();
-  Straight();
+  straightens();
 }
 
 void loop() {
