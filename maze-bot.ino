@@ -61,13 +61,16 @@ void drive() {  /// Funzione che guida tutto
     float dist = ultrasonic[3].read() - 30;
     mat.go();
     mov.go();
-    while (ultrasonic[3].read() > dist) {
+    bool black = false;
+    while (ultrasonic[3].read() > dist && !black) {
       if (color.read() == 2) {
         mov.stop();
-        //mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[0].read(), ultrasonic[2].read(), color.read());
-        mat.check(0, 0, 0, 0, 0, color.read());
+        mat.check(0, 0, 0, 0, 0, color.read()); //Controllo se sono in una casella proibita
         mat.back();
-        //TODO andare indietro fino al centro della casella
+        dist+=30;
+        mov.back();
+        while(ultrasonic[US_AVANTI] < dist);
+        black=true;
       }
     }
     mov.stop();

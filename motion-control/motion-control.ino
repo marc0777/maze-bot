@@ -103,13 +103,13 @@ void loop() {
       mov.stop();
       break;
     case 1:
-      goStraight(false);
+      goStraightPID(false);
       break;
     case 2:
       turn(false);
       break;
     case 3:
-      goStraight(true);
+      goStraightPID(true);
       break;
     case 4:
       turn(true);
