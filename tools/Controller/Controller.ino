@@ -16,11 +16,3 @@ void loop() {
       mot.set(data);
     }
 }
-
-
-
-
-
-
-
-
