@@ -25,7 +25,7 @@ float direzione = 0;
 byte state = -1;
 byte prevState = -1;
 
-Moviment mov(255, 0, 0);
+Moviment mov(120, 0, 0);
 IMU orientation;
 
 void receiveEvent(int howMany) {
@@ -69,8 +69,9 @@ void turn(bool invert) {
   orientation.start();
   mov.rotate(invert);
   float end = endAngle(orientation.yaw(), invert);
-  if (invert) while(orientation.yaw()<end);
-  else while(orientation.yaw()>end);
+  if (invert)while(orientation.yaw()<end)rotationSpeed(invert,end);
+  else while(orientation.yaw()>end)rotationSpeed(invert,end);
+  mov.setK(0,0);
   mov.stop();
 }
 
