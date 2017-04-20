@@ -77,11 +77,11 @@ void turn(bool invert) {
 
 float endAngle(float angle, bool invert) {
   if (invert) {
-    angle += 50;
+    angle += 90;
     return (angle > 360) ? angle - 360 : angle;
   }
   else {
-    angle -= 50;
+    angle -= 90;
     return (angle < 0) ? angle + 360 : angle;
   }
 }
@@ -95,10 +95,13 @@ void setup() {
   orientation.calibrate();
   delay(100);
   pid.SetOutputLimits(OUT_MIN, OUT_MAX);
+  pinMode(13,OUTPUT);
 }
 
 void loop() {
   if (state!=prevState) {
+    digitalWrite(13,HIGH);
+    delay(500);
     switch (state) {
     case 0:
       mov.stop();
@@ -123,5 +126,7 @@ void loop() {
       break;
     }
     prevState=state;
+    digitalWrite(13,LOW);
+    delay(500);
   }
 }

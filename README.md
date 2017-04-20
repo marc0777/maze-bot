@@ -17,4 +17,4 @@ Long term:
 
 To import libraries to your IDE you have to create a symlink from this repository to your Arduino libraries folder. To do that you need first to delete the defalut arduino libraries folder, then to open an administrator command prompt and give the following command:
 
-mklink /J ArduinoLibrariesFolder YoutGitHub\maze-bot\libraries
+mklink /J C:\Users\Giorgia\Documents\Arduino\libraries C:\Users\Giorgia\Desktop\maze-bot\libraries
