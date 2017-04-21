@@ -48,7 +48,6 @@ private:
     byte checkr;
     byte checkc;
     byte checkfl;
-    bool rise; // True while the robot is rising
     int cont; // Visited cells counter
 };
 

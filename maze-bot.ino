@@ -40,7 +40,7 @@ void straightens(){
 
 void drive() {  /// Funzione che guida tutto
   if(mat.keep) {
-    mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[0].read(), ultrasonic[2].read(), inclination, color.read());
+    mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[0].read(), ultrasonic[2].read(), color.read());
     switch (mat.getDir(ultrasonic[0].read(), ultrasonic[3].read(), ultrasonic[2].read())) {
       case 1 :
       mat.rotate(false);
@@ -62,7 +62,7 @@ void drive() {  /// Funzione che guida tutto
     mat.go();
     mov.go();
     bool black = false;
-    while (ultrasonic[3].read() > dist && !black) {
+    while (ultrasonic[3].read() > dist && !black && !rise) {
       if (color.read() == 2) {
         mov.stop();
         mat.check(0, 0, 0, 0, 0, color.read()); //Controllo se sono in una casella proibita
@@ -77,7 +77,7 @@ void drive() {  /// Funzione che guida tutto
         mat.back();
         mat.changeFloor();
         while(inclination >= 10 || inclination <= -10);
-        break;
+        dist = ultrasonic[3].read() - 5;
       }
     }
     mov.stop();
