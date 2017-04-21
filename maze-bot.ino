@@ -72,6 +72,13 @@ void drive() {  /// Funzione che guida tutto
         while(ultrasonic[US_AVANTI] < dist);
         black=true;
       }
+      // Se rileva salita
+      if (inclination >= 10 || inclination <= -10) {
+        mat.back();
+        mat.changeFloor();
+        while(inclination >= 10 || inclination <= -10);
+        break;
+      }
     }
     mov.stop();
   }
