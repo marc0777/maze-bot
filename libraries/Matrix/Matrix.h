@@ -14,7 +14,7 @@ public:
 
     /* Check the status of the cell (black, hot, checkpoint...)*/
     void check(float tempDx, float tempSx, float distDx, float distSx, float inclination, byte color);
-    /* Change the floor of the matrix
+    /* Change the floor of the matrix */
     void changeFloor();
     /* Returns true if the cell in front of the robot is already visited*/
     bool frontCheck();
