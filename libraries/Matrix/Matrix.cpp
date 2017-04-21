@@ -12,7 +12,6 @@ void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, byte 
   if (!maze[floor][r[floor]][c[floor]].isVisited()) cont++;
 
   maze[floor][r[floor]][c[floor]].visited();
-  maze[floor][r[floor]][c[floor]].direction(dir);
 
   bool hotDx = tempDx >= DELTATEMP && distDx < DISTWALL;
   bool hotSx = tempSx >= DELTATEMP && distSx < DISTWALL;
