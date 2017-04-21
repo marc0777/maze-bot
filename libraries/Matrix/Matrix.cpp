@@ -1,7 +1,7 @@
 #include "Matrix.h"
 
 Matrix::Matrix() {
-  r[0] = r[1] = c[0] = c[1] = 8; // Both fool start from the center
+  r[0] = r[1] = c[0] = c[1] = 9; // Both fool start from the center
   floor = 0;
   dir = 0;
   keep = true;
