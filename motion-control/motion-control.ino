@@ -95,13 +95,10 @@ void setup() {
   orientation.calibrate();
   delay(100);
   pid.SetOutputLimits(OUT_MIN, OUT_MAX);
-  pinMode(13,OUTPUT);
 }
 
 void loop() {
   if (state!=prevState) {
-    digitalWrite(13,HIGH);
-    delay(500);
     switch (state) {
     case 0:
       mov.stop();
@@ -126,7 +123,5 @@ void loop() {
       break;
     }
     prevState=state;
-    digitalWrite(13,LOW);
-    delay(500);
   }
 }
