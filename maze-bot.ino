@@ -5,6 +5,7 @@
 #include <DistanceUS.h>
 #include <Motion.h>
 
+#define ADCTOV 0.0149589739 //costante per il calcolo della tensione della batteria dai pin analogici
 #define INTERRUPT 2
 #define DEBUG TRUE
 #define ROTATEDELAY 1000
