@@ -4,15 +4,15 @@ Motion mot;
 byte data;
 
 void setup() {
-  Serial.begin(9600);
-  Serial.println("Pronto ad inviare");
+  Serial3.begin(9600);
+  Serial3.println("Pronto ad inviare");
 }
 
 void loop() {
-    if (Serial.available() > 0) {
-      data=Serial.read()-'0';
-      Serial.print("Invio dati: ");
-      Serial.println(data);
+    if (Serial3.available() > 0) {
+      data=Serial3.read()-'0';
+      Serial3.print("Invio dati: ");
+      Serial3.println(data);
       mot.set(data);
     }
 }
