@@ -17,7 +17,7 @@
 #define inclination 0
 //TODO aggiungere una funzione che ritorni l'inclinazione
 
-Motion mov;
+Motion mov; // tutti i mov.back() sono stati sostituiti da mov.go(true);
 Matrix mat; // Matrice che rappresenta il maze
 ColorIR color; // Sensore di colore
 // usltrasonic[n] : n = : 0 = destra, 1 = dietro, 2 = sinistra, 3 = avanti
@@ -73,14 +73,14 @@ void drive() {  /// Funzione che guida tutto
     mat.go();
     mov.go();
     bool black = false;
-    while (ultrasonic[3].read() > dist && !black && !rise) {
+    while (ultrasonic[3].read() > dist && !black) {
       if (color.read() == 2) {
         mov.stop();
-        mat.check(0, 0, 0, 0, 0, color.read()); //Controllo se sono in una casella proibita
+        mat.check(0.0, 0.0, 0.0, 0.0, color.read()); //Controllo se sono in una casella proibita
         mat.back();
         dist += 30;
-        mov.back();
-        while (ultrasonic[US_AVANTI] < dist);
+        mov.go(true);
+        while (ultrasonic[US_AVANTI].read() < dist);
         black = true;
       }
       // Se rileva salita
