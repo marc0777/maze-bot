@@ -32,9 +32,9 @@ bool isStraight() {
 }
 
 void straightens() {
-  if (!dritto()) {
+  if (!isStraight()) {
     mov.rotate(true, true);
-    while (!dritto());
+    while (!isStraight());
     mov.stop();
   }
 }
@@ -96,9 +96,8 @@ void drive() {  /// Funzione che guida tutto
 }
 
 void pause () {
-  byte state = mov.get();
   while (digitalRead(INTERRUPT));
-  mov.set(state);
+  mat.reset();
 }
 
 void setup() {
