@@ -8,10 +8,15 @@
 #define S2 6
 #define S3 5
 #define sensorOut 4
+#define MERROR 100 // Error for mirror recognition
 
-class Color{ //http://howtomechatronics.com/tutorials/arduino/arduino-color-sensing-tutorial-tcs230-tcs3200-color-sensor/
+
+class Color {
 public:
   Color();
-  bool read(); /// 0 = nero 1 = bianco
+  byte read();
+private:
+  unsigned short readIR();
+  unsigned short mirror;
 };
 #endif
