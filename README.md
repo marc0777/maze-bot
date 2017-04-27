@@ -3,15 +3,15 @@ Projects and code for the robot made for the maze solving competition Robocup Jr
 
 ## Todo
 
-By Thursday:
+Before the competition:
 - [ ] Turn on a LED when a victim has found
-- [ ] Change Ultrasonic disposition (the one on the back goes on front)
+- [x] Change Ultrasonic disposition (the one on the back goes on front)
 - [ ] Gyroscope compensation from temperature variations
 
 Long term:
 - [ ] Debug in every object with a define in maze-bot.ino
 - [x] Debug over bluetooth
-- [ ] Desktop GUI for testing
+- [x] Desktop GUI for testing
 
 ## Notes
 
