@@ -22,7 +22,7 @@ byte Color::read(){ //@return 0 se sotto non c'è niente, 1 se c'è uno specchio
     digitalWrite(S3,LOW);
     // Reading the output frequency
     int R = pulseIn(sensorOut, LOW);
-    color =  R >= 100;
+    color =  R < 100? 0 : 2;
   }
   return color;
 }

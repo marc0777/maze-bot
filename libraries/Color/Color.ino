@@ -11,7 +11,7 @@ void loop() {
   Serial.println("LEGGO");
   byte col = color->read();
   Serial.println(col);
-  switch(col) {000
+  switch(col) {
     case 0:
       Serial.println("bianco");
       break;
