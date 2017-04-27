@@ -12,6 +12,6 @@
 class Color{ //http://howtomechatronics.com/tutorials/arduino/arduino-color-sensing-tutorial-tcs230-tcs3200-color-sensor/
 public:
   Color();
-  bool read(); /// 0 = nero 1 = biancossss
+  bool read(); /// 0 = nero 1 = bianco
 };
 #endif

@@ -13,6 +13,7 @@
 #define US_DESTRA 1
 #define US_DIETRO 2
 #define US_SINISTRA 3
+#define RAMP 20
 
 #define inclination 0
 //TODO aggiungere una funzione che ritorni l'inclinazione
@@ -84,10 +85,10 @@ void drive() {  /// Funzione che guida tutto
         black = true;
       }
       // Se rileva salita
-      if (inclination >= 10 || inclination <= -10) {
+      if (inclination >= RAMP || inclination <= -RAMP) {
         mat.back();
         mat.changeFloor();
-        while (inclination >= 10 || inclination <= -10);
+        while (inclination >= RAMP || inclination <= -RAMP);
         dist = ultrasonic[3].read() - 5;
       }
     }
