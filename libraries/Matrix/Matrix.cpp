@@ -24,7 +24,7 @@ void Matrix::check(float tempDx, float tempSx, float distDx, float distSx, byte 
     checkfl = floor;
   } else if (color == 2) maze[floor][r[floor]][c[floor]].black();
 
-  keep = cont < NCELLS || !(floor == 0 && r[floor] == 8 && c[floor] == 8);
+  keep = cont < NCELLS || !(floor == 0 && r[floor] == 9 && c[floor] == 9);
 }
 
 void Matrix::changeFloor() {
