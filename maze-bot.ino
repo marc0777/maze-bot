@@ -9,10 +9,10 @@
 #define INTERRUPT 2
 #define DEBUG TRUE
 #define ROTATEDELAY 1000
-#define US_AVANTI 0
-#define US_DESTRA 1
-#define US_DIETRO 2
-#define US_SINISTRA 3
+#define US_FRONTR 0
+#define US_FRONTL 1
+#define US_RIGHT 2
+#define US_LEFT 3
 #define RAMP 20
 
 #define inclination 0
@@ -21,15 +21,14 @@
 Motion mov; // tutti i mov.back() sono stati sostituiti da mov.go(true);
 Matrix mat; // Matrice che rappresenta il maze
 ColorIR color; // Sensore di colore
-// usltrasonic[n] : n = : 0 = destra, 1 = dietro, 2 = sinistra, 3 = avanti
-DistanceUS ultrasonic[4] = {DistanceUS(44, 45, 5, 93), DistanceUS(46, 47, 5, 93), DistanceUS(48, 49, 5, 93),
-                            DistanceUS(50, 51, 5, 93)
+DistanceUS ultrasonic[4] = {DistanceUS(40, 42, 5, 93), DistanceUS(36, 38, 5, 93), DistanceUS(32, 34, 5, 93),
+                            DistanceUS(28, 30, 5, 93)
                            };
 
-Temperature temps[2] = {Temperature(0x5A), Temperature(0x5C)}; // Sensori temperatura 5A sinistra, 5C destra
+Temperature temps[2] = {Temperature(0x5B), Temperature(0x5A)}; // Sensori temperatura 5B sinistra, 5A destra
 
 bool isStraight() {
-  return (abs(ultrasonic[US_AVANTI].read() - ultrasonic[US_DIETRO].read())) < 1;
+  return (abs(ultrasonic[US_FRONTR].read() - ultrasonic[US_FRONTL].read())) < 1;
 }
 
 void straightens() {
@@ -42,7 +41,7 @@ void straightens() {
 
 void drive() {  /// Funzione che guida tutto
   if (mat.keep) {
-    mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[0].read(), ultrasonic[2].read(), color.read());
+    mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[US_RIGHT].read(), ultrasonic[US_LEFT].read(), color.read());
     if (mat.isHot()) {
       //TODO accendere led RGB
       digitalWrite(13, 1);
@@ -53,7 +52,7 @@ void drive() {  /// Funzione che guida tutto
       delay(800);
       digitalWrite(13, 0);
     }
-    switch (mat.getDir(ultrasonic[0].read(), ultrasonic[3].read(), ultrasonic[2].read())) {
+    switch (mat.getDir(ultrasonic[US_RIGHT].read(), ultrasonic[US_FRONTR].read(), ultrasonic[US_LEFT].read())) {
       case 1 :
         mat.rotate(false);
         mov.rotate();
@@ -70,18 +69,18 @@ void drive() {  /// Funzione che guida tutto
         break;
     }
     delay(ROTATEDELAY);
-    float dist = ultrasonic[3].read() - 30;
+    float dist = ultrasonic[US_FRONTR].read() - 30;
     mat.go();
     mov.go();
     bool black = false;
-    while (ultrasonic[3].read() > dist && !black) {
+    while (ultrasonic[US_FRONTR].read() > dist && !black) {
       if (color.read() == 2) {
         mov.stop();
         mat.check(0.0, 0.0, 0.0, 0.0, color.read()); //Controllo se sono in una casella proibita
         mat.back();
         dist += 30;
         mov.go(true);
-        while (ultrasonic[US_AVANTI].read() < dist);
+        while (ultrasonic[US_FRONTR].read() < dist);
         black = true;
       }
       // Se rileva salita
@@ -89,7 +88,7 @@ void drive() {  /// Funzione che guida tutto
         mat.back();
         mat.changeFloor();
         while (inclination >= RAMP || inclination <= -RAMP);
-        dist = ultrasonic[3].read() - 5;
+        dist = ultrasonic[US_FRONTR].read() - 5;
       }
     }
     mov.stop();
