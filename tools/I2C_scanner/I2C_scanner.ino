@@ -8,17 +8,17 @@ void setup() {
 void loop() {
   byte error, address;
   int nDevices;
-  Serial.println("Scanning I2C...");
+  Serial.println("Scanning I²C...");
   nDevices = 0;
   for(address = 1; address < 127; address++ ) {
     Wire.beginTransmission(address);
     error = Wire.endTransmission();
 
     if (error == 0) {
-      Serial.print("I2C device found at address 0x");
+      Serial.print("I²C device found at address 0x");
       if (address<16) Serial.print("0");
       Serial.print(address,HEX);
-      Serial.println("  !");
+      Serial.println("!");
       nDevices++;
     }
     else if (error==4) {
@@ -27,7 +27,7 @@ void loop() {
       Serial.println(address,HEX);
     }    
   }
-  if (nDevices == 0) Serial.println("No I2C devices found\n");
+  if (nDevices == 0) Serial.println("No I²C devices found\n");
   else Serial.println("done\n");
   delay(5000);
 }
