@@ -1,4 +1,4 @@
-#ifndef MATRIX_H
+﻿#ifndef MATRIX_H
 #define MATRIX_H
 
 #include <Arduino.h>
@@ -6,7 +6,7 @@
 
 #define DELTATEMP 10 // Delta minima di temperatorua perchè la parete sia calda
 #define DISTWALL 10 // Distanza massima del robot dal muro vicino
-#define NCELLS 31 // Numero totale di celle nel maze
+#define NCELLS 36 // Numero totale di celle nel maze
 
 class Matrix {
 public:
