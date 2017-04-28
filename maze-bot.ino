@@ -76,11 +76,11 @@ void drive() {  /// Funzione che guida tutto
     while (ultrasonic[US_FRONTR].read() > dist && !black) {
       if (color.read() == 2) {
         mov.stop();
-        mat.check(0.0, 0.0, 0.0, 0.0, color.read()); //Controllo se sono in una casella proibita
+        mat.check(0.0, 0.0, 0.0, 0.0, 2); //Controllo se sono in una casella proibita
         mat.back();
         dist += 30;
         mov.go(true);
-        while (ultrasonic[US_FRONTR].read() < dist);
+        while (ultrasonic[US_FRONTR].read() <= dist);
         black = true;
       }
       // Se rileva salita
