@@ -15,21 +15,23 @@ Color::Color(){
 
 byte Color::read(){ //@return 0 se sotto non c'è niente, 1 se c'è uno specchio e 2 se è nero.
   byte color;
-  if(readIR() > mirror - MERROR && readIR() < mirror + MERROR) color = 1;
+  unsigned short reflection = readIR();
+  if(reflection > mirror - MERROR && reflection < mirror + MERROR) color = 1;
   else {
     // Setting red filtered photodiodes to be read
     digitalWrite(S2,LOW);
     digitalWrite(S3,LOW);
     // Reading the output frequency
     int R = pulseIn(sensorOut, LOW);
-    color =  R < 100? 0 : 2;
+
+    color =  R < 50 ? 0 : 2;
   }
   return color;
 }
 
 unsigned short Color::readIR() {
-  unsigned short media = analogRead(A0);
+  unsigned short media = analogRead(A1);
   delay(100);
-  media += analogRead(A1);
+  media += analogRead(A2);
   return media >> 1;
 }
