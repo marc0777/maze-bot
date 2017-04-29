@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <ColorIR.h>
+#include <Color.h>
 #include <Matrix.h>
 #include <Temperature.h>
 #include <DistanceUS.h>
@@ -20,12 +20,27 @@
 
 Motion mov; // tutti i mov.back() sono stati sostituiti da mov.go(true);
 Matrix mat; // Matrice che rappresenta il maze
-ColorIR color; // Sensore di colore
+Color *color; // Sensore di colore
 DistanceUS ultrasonic[4] = {DistanceUS(40, 42, 5, 93), DistanceUS(36, 38, 5, 93), DistanceUS(32, 34, 5, 93),
                             DistanceUS(28, 30, 5, 93)
                            };
 
 Temperature temps[2] = {Temperature(0x5B), Temperature(0x5A)}; // Sensori temperatura 5B sinistra, 5A destra
+
+float batStats() {
+  return analogRead(A0) * ADCTOV;
+}
+
+//TODO accendere led RGB
+void victim() {
+    digitalWrite(13, 1);
+    delay(1000);
+    digitalWrite(13, 0);
+    delay(500);
+    digitalWrite(13, 1);
+    delay(800);
+    digitalWrite(13, 0);
+}
 
 bool isStraight() {
   return (abs(ultrasonic[US_FRONTR].read() - ultrasonic[US_FRONTL].read())) < 1;
@@ -41,17 +56,8 @@ void straightens() {
 
 void drive() {  /// Funzione che guida tutto
   if (mat.keep) {
-    mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[US_RIGHT].read(), ultrasonic[US_LEFT].read(), color.read());
-    if (mat.isHot()) {
-      //TODO accendere led RGB
-      digitalWrite(13, 1);
-      delay(1000);
-      digitalWrite(13, 0);
-      delay(500);
-      digitalWrite(13, 1);
-      delay(800);
-      digitalWrite(13, 0);
-    }
+    mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[US_RIGHT].read(), ultrasonic[US_LEFT].read(), color->read());
+    if (mat.isHot()) victim();
     switch (mat.getDir(ultrasonic[US_RIGHT].read(), ultrasonic[US_FRONTR].read(), ultrasonic[US_LEFT].read())) {
       case 1 :
         mat.rotate(false);
@@ -74,7 +80,7 @@ void drive() {  /// Funzione che guida tutto
     mov.go();
     bool black = false;
     while (ultrasonic[US_FRONTR].read() > dist && !black) {
-      if (color.read() == 2) {
+      if (color->read() == 2) {
         mov.stop();
         mat.check(0.0, 0.0, 0.0, 0.0, 2); //Controllo se sono in una casella proibita
         mat.back();
@@ -96,8 +102,10 @@ void drive() {  /// Funzione che guida tutto
 }
 
 void pause () {
+  detachInterrupt(digitalPinToInterrupt(INTERRUPT));
   while (digitalRead(INTERRUPT));
   mat.reset();
+  attachInterrupt(digitalPinToInterrupt(INTERRUPT), pause, FALLING);
 }
 
 void setup() {
@@ -105,6 +113,7 @@ void setup() {
   Serial.begin(9600);
   Serial.println("Avvio!");
 #endif
+  color = new Color();
   pinMode(INTERRUPT, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(INTERRUPT), pause, FALLING);
   for (int i = 0; i < 2; i++) temps[i].begin();
