@@ -26,6 +26,6 @@ class Motion {
     byte get();
     int inclination();
   private:
-    byte request();
+    byte request(byte data, byte address);
 };
 #endif
