@@ -15,21 +15,15 @@
 #define US_LEFT 3
 #define RAMP 20
 
-<<<<<<< HEAD
-#define inclination 0
-//TODO aggiungere una funzione che ritorni l'inclinazione
-
 #ifdef DEBUG
   String stampo;
 #endif
 
-=======
->>>>>>> origin/master
 Motion mov; // tutti i mov.back() sono stati sostituiti da mov.go(true);
 Matrix mat; // Matrice che rappresenta il maze
 Color *color; // Sensore di colore
-DistanceUS ultrasonic[4] = {DistanceUS(40, 42, 5, 93), DistanceUS(36, 38, 5, 93), DistanceUS(32, 34, 5, 93),
-                            DistanceUS(28, 30, 5, 93)
+DistanceUS ultrasonic[4] = {DistanceUS(40, 42), DistanceUS(36, 38), DistanceUS(32, 34),
+                            DistanceUS(28, 30)
                            };
 
 Temperature temps[2] = {Temperature(0x5B), Temperature(0x5A)}; // Sensori temperatura 5B sinistra, 5A destra
