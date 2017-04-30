@@ -22,19 +22,31 @@ PID pid(&inputPID, &outputPID, &Setpoint, Kp, Ki, Kd, DIRECT);  //inizializzazio
 
 float rapportoVR = 60 / 90; //deltaV/deltaR
 float direzione = 0;
-byte state = -1;
-byte prevState = -1;
+byte state = 255;
+byte requested = 255;
+byte prevState = 255;
+int inclination;
 
 Moviment mov(120, 0, 0);
 IMU orientation;
 
 void receiveEvent(int howMany) {
-  state = Wire.read();
+  byte input = Wire.read();
+  if (input < 127) state = input;
+  else requested = input-127;
 }
 
-
 void requestEvent() {
-  Wire.write(state);
+  byte out;
+  switch (requested) {
+    case 0:
+      out = inclination+90;
+      break;
+    case 1:
+      out = state;
+      break;
+  }
+  Wire.write(out);
 }
 
 void rotationSpeed(bool direction , float endRotation) {
@@ -124,4 +136,5 @@ void loop() {
     }
     prevState=state;
   }
+  inclination=orientation.pitch();
 }

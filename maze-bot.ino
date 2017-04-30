@@ -15,6 +15,7 @@
 #define US_LEFT 3
 #define RAMP 20
 
+<<<<<<< HEAD
 #define inclination 0
 //TODO aggiungere una funzione che ritorni l'inclinazione
 
@@ -22,6 +23,8 @@
   String stampo;
 #endif
 
+=======
+>>>>>>> origin/master
 Motion mov; // tutti i mov.back() sono stati sostituiti da mov.go(true);
 Matrix mat; // Matrice che rappresenta il maze
 Color *color; // Sensore di colore
@@ -136,13 +139,14 @@ void drive() {  /// Funzione che guida tutto
         black = true;
       }
       // Se rileva salita
+      int inclination = mov.inclination();
       if (inclination >= RAMP || inclination <= -RAMP) {
         #ifdef DEBUG
           stampo = "Rampa trovata";
         #endif
         mat.back();
         mat.changeFloor();
-        while (inclination >= RAMP || inclination <= -RAMP);
+        while (inclination >= RAMP || inclination <= -RAMP) inclination = mov.inclination();
         dist = ultrasonic[US_FRONTR].read() - 5;
         #ifdef DEBUG
           stampo = stampo + " e completata";
