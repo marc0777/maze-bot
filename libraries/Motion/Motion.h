@@ -23,5 +23,9 @@ class Motion {
     void rotate(bool invert);
     void rotate(bool invert, bool infinite);
     void set(byte state);
+    byte get();
+    int inclination();
+  private:
+    byte request();
 };
 #endif

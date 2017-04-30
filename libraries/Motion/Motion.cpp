@@ -33,3 +33,22 @@ void Motion::set(byte state) {
 	Wire.write(state);
 	Wire.endTransmission();
 }
+
+byte Motion::get() {
+	return request(1,MOTION_ADDRESS);
+}
+
+int Motion::inclination() {
+	return request(0, MOTION_ADDRESS)-90;
+}
+
+byte Motion::request(byte data, byte address) {
+  //Scrivo allo slave il dato richiesto
+  Wire.beginTransmission(address);
+  Wire.write(data+127);
+  Wire.endTransmission();
+  //Leggo dallo slave il dato di risposta
+  Wire.requestFrom(address, 1);
+  while (!Wire.available());
+  return Wire.read();
+}
