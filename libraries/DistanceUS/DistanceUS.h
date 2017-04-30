@@ -7,15 +7,10 @@
 
 class DistanceUS {
   public:
-    DistanceUS(int trigPin, int echoPin, int average, int tolerance);
+    DistanceUS(int trigPin, int echoPin);
     float read();
   private:
-    float cm();
-    int trigPin;
-    int echoPin;
-    int irPin;
-    int average;
-    int tolerance;
-    float previousDistance;
+    byte trigPin;
+    byte echoPin;
 };
 #endif
