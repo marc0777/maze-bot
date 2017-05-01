@@ -133,6 +133,21 @@ void drive() {  /// Funzione che guida tutto
         #endif
         black = true;
       }
+     // Se rileva salita
+     int inclination = mov.inclination();
+     if (inclination >= RAMP || inclination <= -RAMP) {
+       #ifdef DEBUG
+         stampo = "Rampa trovata";
+       #endif
+       mat.back();
+       mat.changeFloor();
+       while (inclination >= RAMP || inclination <= -RAMP) inclination = mov.inclination();
+       dist = ultrasonic[US_FRONTR].read() - 5;
+       #ifdef DEBUG
+         stampo = stampo + " e completata";
+         Serial.print(stampo);
+       #endif
+     }
     }
     mov.stop();
   }
