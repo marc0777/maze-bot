@@ -4,10 +4,6 @@ Temperature::Temperature(byte address) {
   this->address = address;
 }
 
-void Temperature::begin() {
-  Wire.begin();
-}
-
 float Temperature::readObj() {
   return readTemp(MLX90614_TOBJ1);
 }

@@ -3,6 +3,7 @@
 #include <IMU.h>
 #include <PID.h>
 
+#define MASTER_ADDRESS 8
 #define ADDRESS 7
 #define OUT_MIN 100
 #define OUT_MAX 255
@@ -35,17 +36,22 @@ void receiveEvent(int howMany) {
   else requested = input-127;
 }
 
-void requestEvent() {
-  byte out;
-  switch (requested) {
-    case 0:
-      out = 90+inclination;
-      break;
-    case 1:
-      out = state;
-      break;
+void send(byte data, byte address) {
+  Wire.beginTransmission(address);
+  Wire.write(data);
+  Wire.endTransmission();
+}
+
+void answer() {
+  if (requested!=255) {
+    switch(requested) {
+      case 0:
+        inclination=orientation.pitch();
+        send(inclination+90,MASTER_ADDRESS);
+        break;
+    }
+    requested=255;
   }
-  Wire.write(out);
 }
 
 void rotationSpeed(bool direction , float endRotation) {
@@ -61,6 +67,7 @@ void goStraight(bool invert) {
     direzione = orientation.yaw();
     if (direzione < 0) mov.setK(-direzione * 2, 0);
     else if (direzione > 0) mov.setK(0, direzione * 2);
+    answer();
   }
 }
 
@@ -73,6 +80,7 @@ void goStraightPID(bool invert) {
     pid.Compute();
     if (direzione < 0) mov.setK(outputPID, -outputPID);
     else if (direzione > 0) mov.setK(-outputPID, outputPID);
+    answer();
   }
 }
 
@@ -80,11 +88,12 @@ void turn(bool invert) {
   orientation.start();
   mov.rotate(invert);
   float end = endAngle(orientation.yaw(), invert);
-  if (invert)while(orientation.yaw()<end)rotationSpeed(invert,end);
-  else while(orientation.yaw()>end)rotationSpeed(invert,end);
+  if (invert) while(orientation.yaw()<end) rotationSpeed(invert,end);
+  else while(orientation.yaw()>end) rotationSpeed(invert,end);
   mov.setK(0,0);
   mov.stop();
   state=0;
+  send(255,MASTER_ADDRESS);
 }
 
 float endAngle(float angle, bool invert) {
@@ -101,7 +110,6 @@ float endAngle(float angle, bool invert) {
 void setup() {
   Wire.begin(ADDRESS);
   Wire.onReceive(receiveEvent);
-  Wire.onRequest(requestEvent);
   orientation.begin();
   delay(100);
   orientation.calibrate();
@@ -137,5 +145,6 @@ void loop() {
     }
     prevState=state;
   }
-  inclination=orientation.pitch();
+  answer();
+
 }

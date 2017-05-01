@@ -10,7 +10,6 @@
 class Temperature  {
  public:
   Temperature(byte address);
-  void begin();
   float readObj();
   float readAmb();
  private:

@@ -15,7 +15,7 @@
 
 class Motion {
   public:
-    Motion();
+    Motion(bool *turning);
     void stop();
     void go();
     void go(bool invert);
@@ -23,10 +23,9 @@ class Motion {
     void rotate(bool invert);
     void rotate(bool invert, bool infinite);
     void set(byte state);
-    byte get();
-    int inclination();
+    void inclination();
   private:
-    byte request(byte data, byte address);
-    void wait(byte until);
+  	bool *turning;
+    void request(byte data, byte address);
 };
 #endif
