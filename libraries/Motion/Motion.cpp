@@ -18,14 +18,17 @@ void Motion::go(bool invert) {
 
 void Motion::rotate() {
   set(MOTION_RIGHT);
+	wait(0);
 }
 
 void Motion::rotate(bool invert) {
 	set((invert)?MOTION_LEFT:MOTION_RIGHT);
+	wait(0);
 }
 
 void Motion::rotate(bool invert, bool infinite) {
 	set((infinite)?((invert)?MOTION_LEFT_INFINITE:MOTION_RIGHT_INFINITE):((invert)?MOTION_LEFT:MOTION_RIGHT));
+	wait(0);
 }
 
 void Motion::set(byte state) {
@@ -51,4 +54,8 @@ byte Motion::request(byte data, byte address) {
   Wire.requestFrom(address, 1);
   while (!Wire.available());
   return Wire.read();
+}
+
+void Motion::wait(byte until) {
+	while(get()!=0) delay (10);
 }

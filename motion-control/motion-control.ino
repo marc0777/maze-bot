@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include <Wire.h>
 #include <Moviment.h>
 #include <IMU.h>
@@ -40,7 +39,7 @@ void requestEvent() {
   byte out;
   switch (requested) {
     case 0:
-      out = inclination+90;
+      out = 90+inclination;
       break;
     case 1:
       out = state;
@@ -85,6 +84,7 @@ void turn(bool invert) {
   else while(orientation.yaw()>end)rotationSpeed(invert,end);
   mov.setK(0,0);
   mov.stop();
+  state=0;
 }
 
 float endAngle(float angle, bool invert) {
@@ -101,11 +101,12 @@ float endAngle(float angle, bool invert) {
 void setup() {
   Wire.begin(ADDRESS);
   Wire.onReceive(receiveEvent);
-  //Wire.onRequest(requestEvent);
+  Wire.onRequest(requestEvent);
   orientation.begin();
   delay(100);
   orientation.calibrate();
   delay(100);
+  orientation.start();
   pid.SetOutputLimits(OUT_MIN, OUT_MAX);
 }
 

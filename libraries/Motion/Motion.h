@@ -27,5 +27,6 @@ class Motion {
     int inclination();
   private:
     byte request(byte data, byte address);
+    void wait(byte until);
 };
 #endif

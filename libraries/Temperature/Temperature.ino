@@ -2,13 +2,17 @@
 
 #include "Temperature.h"
 
-Temperature t = Temperature(0x5A);
+Temperature t1 = Temperature(0x5A);
+Temperature t2 = Temperature(0x5B);
 
 void setup() {
   Serial.begin(9600);
-  t.begin();
+  t1.begin();
+  t2.begin();
 }
 
 void loop() {
-  Serial.println(t.readObj());
+  Serial.print(t1.readObj());
+  Serial.print("\t");
+  Serial.println(t2.readObj());
 }

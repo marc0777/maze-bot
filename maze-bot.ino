@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include <Color.h>
 #include <Matrix.h>
 #include <Temperature.h>
@@ -8,7 +7,6 @@
 #define ADCTOV 0.0149589739 //costante per il calcolo della tensione della batteria dai pin analogici
 #define INTERRUPT 2
 #define DEBUG TRUE
-#define ROTATEDELAY 1000
 #define US_FRONTR 0
 #define US_FRONTL 1
 #define US_RIGHT 2
@@ -36,7 +34,7 @@ float batStats() {
 void victim() {
     #ifdef DEBUG
     stampo = "Corpo rilevato\n";
-    Serial3.print(stampo);
+    Serial.print(stampo);
     #endif
     digitalWrite(13, 1);
     delay(1000);
@@ -65,7 +63,7 @@ void straightens() {
     #endif
   }
   #ifdef DEBUG
-    Serial3.print(stampo);
+    Serial.print(stampo);
   #endif
 }
 
@@ -74,8 +72,8 @@ void drive() {  /// Funzione che guida tutto
     mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[US_RIGHT].read(), ultrasonic[US_LEFT].read(), color->read());
     #ifdef DEBUG
       stampo = "Controllo cella: " +  mat.isVisited()? "cella visitata":"" + '\n';
-      Serial3.print(stampo);
-      //Serial3.println(stampo);
+      Serial.print(stampo);
+      //Serial.println(stampo);
     #endif
     if (mat.isHot()) victim();
     switch (mat.getDir(ultrasonic[US_RIGHT].read(), ultrasonic[US_FRONTR].read(), ultrasonic[US_LEFT].read())) {
@@ -104,18 +102,21 @@ void drive() {  /// Funzione che guida tutto
         break;
     }
     #ifdef DEBUG
-    Serial3.print(stampo);
+    Serial.print(stampo);
     #endif
-    delay(ROTATEDELAY);
+    mov.stop();
     float dist = ultrasonic[US_FRONTR].read() - 30;
     mat.go();
     mov.go();
     #ifdef DEBUG
-      stampo = " e vado avanti\n";
-      Serial3.print(stampo);
+      stampo = " e vado avanti\t" + (String)dist;
+      Serial.println(stampo);
     #endif
     bool black = false;
     while (ultrasonic[US_FRONTR].read() > dist && !black) {
+      Serial.print(dist);
+      Serial.print("\t");
+      Serial.println(ultrasonic[US_FRONTR].read());
       if (color->read() == 2) {
         #ifdef DEBUG
           stampo = "Trovata cella nera ";
@@ -128,24 +129,9 @@ void drive() {  /// Funzione che guida tutto
         while (ultrasonic[US_FRONTR].read() <= dist);
         #ifdef DEBUG
         stampo = stampo + "quindi torno indietro\n";
-        Serial3.print(stampo);
+        Serial.print(stampo);
         #endif
         black = true;
-      }
-      // Se rileva salita
-      int inclination = mov.inclination();
-      if (inclination >= RAMP || inclination <= -RAMP) {
-        #ifdef DEBUG
-          stampo = "Rampa trovata";
-        #endif
-        mat.back();
-        mat.changeFloor();
-        while (inclination >= RAMP || inclination <= -RAMP) inclination = mov.inclination();
-        dist = ultrasonic[US_FRONTR].read() - 5;
-        #ifdef DEBUG
-          stampo = stampo + " e completata";
-          Serial3.print(stampo);
-        #endif
       }
     }
     mov.stop();
@@ -161,8 +147,8 @@ void pause () {
 
 void setup() {
 #ifdef DEBUG
-  Serial3.begin(9600);
-  Serial3.println("Avvio!");
+  Serial.begin(9600);
+  Serial.println("Avvio!");
 #endif
   color = new Color();
   pinMode(INTERRUPT, INPUT_PULLUP);
