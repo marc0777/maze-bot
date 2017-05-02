@@ -20,7 +20,6 @@ PID pid(&inputPID, &outputPID, &Setpoint, Kp, Ki, Kd, DIRECT);  //inizializzazio
 //parametri da mettere apposto.
 
 
-float rapportoVR = 60 / 90; //deltaV/deltaR
 float direzione = 0;
 byte state = 255;
 byte requested = 255;
@@ -53,8 +52,9 @@ void answer() {
 
 void rotationSpeed(bool direction , float endRotation) {
   direzione = orientation.yaw();
-  if (direction) mov.setK(70 + ((endRotation - direzione)*rapportoVR), 70 + ((endRotation - direzione)*rapportoVR));
-  else mov.setK(70 + ((direzione - endRotation)*rapportoVR), 70 + ((direzione - endRotation)*rapportoVR));
+  if (direction) mov.setK(40 + ((endRotation - direzione)*2), 60 + ((endRotation - direzione)*2));
+  else mov.setK(60 + ((direzione - endRotation)*2), 40 + ((direzione - endRotation)*2));
+  mov.rotate(direction);
 }// negare la condizione se il filtro funziona in modo diverso
 
 void goStraight(bool invert) {
@@ -95,11 +95,11 @@ void turn(bool invert) {
 
 float endAngle(float angle, bool invert) {
   if (invert) {
-    angle += 90;
+    angle += 85;
     return (angle > 360) ? angle - 360 : angle;
   }
   else {
-    angle -= 90;
+    angle -= 85;
     return (angle < 0) ? angle + 360 : angle;
   }
 }
