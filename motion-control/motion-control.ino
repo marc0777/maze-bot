@@ -44,7 +44,7 @@ void send(byte data, byte address) {
 }
 
 void answer() {
-  if (requested!=255)
+  if (requested!=255) {
     inclination=orientation.pitch();
     send(inclination+90,MASTER_ADDRESS);
     requested=255;
@@ -118,7 +118,7 @@ void setup() {
 void loop() {
   if (state!=prevState) {
     switch (state) {
-    case 0:
+    case 9:
       mov.stop();
       break;
     case 1:

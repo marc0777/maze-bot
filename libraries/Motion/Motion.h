@@ -5,7 +5,7 @@
 #include <Wire.h>
 
 #define MOTION_ADDRESS 7
-#define MOTION_STOP 0
+#define MOTION_STOP 9
 #define MOTION_FORWARD 1
 #define MOTION_RIGHT 2
 #define MOTION_BACKWARD 3
@@ -27,6 +27,6 @@ class Motion {
     void setSpeed(byte speed);
   private:
   	bool *turning;
-    void request(byte data, byte address);
+    void send(byte data, byte address);
 };
 #endif

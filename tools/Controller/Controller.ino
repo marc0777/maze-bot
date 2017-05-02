@@ -1,9 +1,22 @@
 #include "Motion.h"
 
-Motion mot;
+
+int inclination;
+bool turning = false;
+
+Motion mot(&turning);
+
 byte data;
 
+void receiveEvent(int howMany) {
+  byte data = Wire.read();
+  if (data == 255) turning=false;
+  else inclination = data-90;
+}
+
 void setup() {
+  Wire.begin(8);
+  Wire.onReceive(receiveEvent);
   Serial.begin(9600);
   Serial.println("Pronto ad inviare");
 }
