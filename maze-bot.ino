@@ -160,6 +160,7 @@ void setup() {
   Wire.onReceive(receiveEvent);
   #ifdef DEBUG
   Serial.begin(9600);
+  delay(5000);
   Serial.println("Avvio!");
   Serial.print("Tensione batteria: ");
   Serial.print(batStats());
