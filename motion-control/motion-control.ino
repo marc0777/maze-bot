@@ -89,7 +89,7 @@ void turn(bool invert) {
   else while(orientation.yaw()>end) rotationSpeed(invert,end);
   mov.setK(0,0);
   mov.stop();
-  state=0;
+  state=9;
   send(255,MASTER_ADDRESS);
 }
 
