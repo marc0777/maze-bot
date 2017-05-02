@@ -5,6 +5,7 @@ Motion::Motion (bool *turning) {
 }
 
 void Motion::stop() {
+	set(0);
 	set(MOTION_STOP);
 }
 
