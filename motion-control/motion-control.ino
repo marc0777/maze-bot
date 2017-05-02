@@ -27,7 +27,7 @@ byte requested = 255;
 byte prevState = 255;
 int inclination;
 
-Moviment mov(120, 0, 0);
+Moviment mov(100, 0, 0);
 IMU orientation;
 
 void receiveEvent(int howMany) {
@@ -53,15 +53,15 @@ void answer() {
 
 void rotationSpeed(bool direction , float endRotation) {
   direzione = orientation.yaw();
-  if (direction) mov.setK(40 + ((endRotation - direzione)*rapportoVR), 40 + ((endRotation - direzione)*rapportoVR));
-  else mov.setK(40 + ((direzione - endRotation)*rapportoVR), 40 + ((direzione - endRotation)*rapportoVR));
+  if (direction) mov.setK(70 + ((endRotation - direzione)*rapportoVR), 70 + ((endRotation - direzione)*rapportoVR));
+  else mov.setK(70 + ((direzione - endRotation)*rapportoVR), 70 + ((direzione - endRotation)*rapportoVR));
 }// negare la condizione se il filtro funziona in modo diverso
 
 void goStraight(bool invert) {
   orientation.start();
   mov.go(invert);
   while (state == 1 || state == 3) {
-    direzione = orientation.yaw();
+    direzione = orientation.yaw()-180;
     if (direzione < 0) mov.setK(-direzione * 2, 0);
     else if (direzione > 0) mov.setK(0, direzione * 2);
     answer();
@@ -122,13 +122,13 @@ void loop() {
       mov.stop();
       break;
     case 1:
-      goStraightPID(false);
+      goStraight(false);
       break;
     case 2:
       turn(false);
       break;
     case 3:
-      goStraightPID(true);
+      goStraight(true);
       break;
     case 4:
       turn(true);

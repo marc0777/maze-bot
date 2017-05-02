@@ -26,8 +26,10 @@ void Motion::rotate(bool invert) {
 
 void Motion::rotate(bool invert, bool infinite) {
 	set((infinite)?((invert)?MOTION_LEFT_INFINITE:MOTION_RIGHT_INFINITE):((invert)?MOTION_LEFT:MOTION_RIGHT));
-	*turning=true;
-	while(*turning) delay(1);
+	if (!infinite) {
+		*turning=true;
+		while(*turning) delay(1);
+	}
 }
 
 void Motion::set(byte state) {
