@@ -5,7 +5,7 @@
 #include "Cell.h"
 
 #define DELTATEMP 10 // Delta minima di temperatorua perchè la parete sia calda
-#define DISTWALL 10 // Distanza massima del robot dal muro vicino
+#define DISTWALL 18 // Distanza massima del robot dal muro vicino
 #define NCELLS 36 // Numero totale di celle nel maze
 
 class Matrix {
