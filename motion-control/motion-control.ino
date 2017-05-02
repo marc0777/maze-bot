@@ -32,8 +32,9 @@ IMU orientation;
 
 void receiveEvent(int howMany) {
   byte input = Wire.read();
-  if (input < 127) state = input;
-  else requested = input-127;
+  if (input < 200) state = input;
+  else if (input == 255) requested = 0;
+  else mov.setSpeed((input-200)*5);
 }
 
 void send(byte data, byte address) {
@@ -43,13 +44,9 @@ void send(byte data, byte address) {
 }
 
 void answer() {
-  if (requested!=255) {
-    switch(requested) {
-      case 0:
-        inclination=orientation.pitch();
-        send(inclination+90,MASTER_ADDRESS);
-        break;
-    }
+  if (requested!=255)
+    inclination=orientation.pitch();
+    send(inclination+90,MASTER_ADDRESS);
     requested=255;
   }
 }

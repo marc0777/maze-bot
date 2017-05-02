@@ -31,17 +31,19 @@ void Motion::rotate(bool invert, bool infinite) {
 }
 
 void Motion::set(byte state) {
-	Wire.beginTransmission(MOTION_ADDRESS);
-	Wire.write(state);
-	Wire.endTransmission();
+	send(state, MOTION_ADDRESS);
 }
 
 void Motion::inclination() {
-	return request(0, MOTION_ADDRESS);
+	send(255, MOTION_ADDRESS);
 }
 
-void Motion::request(byte data, byte address) {
+void Motion::setSpeed(byte speed) {
+	send(200+speed/5, MOTION_ADDRESS);
+}
+
+void Motion::send(byte data, byte address) {
   Wire.beginTransmission(address);
-  Wire.write(data+127);
+  Wire.write(data);
   Wire.endTransmission();
 }
