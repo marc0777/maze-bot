@@ -65,6 +65,7 @@ void goStraight(bool invert) {
     if (direzione < 0) mov.setK(-direzione * 2, 0);
     else if (direzione > 0) mov.setK(0, direzione * 2);
     answer();
+    mov.go(invert);
   }
 }
 
@@ -78,6 +79,7 @@ void goStraightPID(bool invert) {
     if (direzione < 0) mov.setK(outputPID, -outputPID);
     else if (direzione > 0) mov.setK(-outputPID, outputPID);
     answer();
+    mov.go(invert);
   }
 }
 
@@ -143,5 +145,4 @@ void loop() {
     prevState=state;
   }
   answer();
-
 }
