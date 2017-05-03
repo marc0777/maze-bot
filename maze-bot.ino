@@ -26,8 +26,8 @@ DistanceUS ultrasonic[4] = {DistanceUS(40, 42), DistanceUS(36, 38), DistanceUS(3
 
 void receiveEvent(int howMany) {
   byte data = Wire.read();
-  if (data == 255) turning=false;
-  else inclination = data-90;
+  if (data == 255) turning = false;
+  else inclination = data - 90;
 }
 
 float batStats() {
@@ -36,16 +36,16 @@ float batStats() {
 
 //TODO accendere led RGB
 void victim() {
-    #ifdef DEBUG
-    Serial.println("Corpo rilevato");
-    #endif
-    digitalWrite(13, 1);
-    delay(1000);
-    digitalWrite(13, 0);
-    delay(500);
-    digitalWrite(13, 1);
-    delay(800);
-    digitalWrite(13, 0);
+#ifdef DEBUG
+  Serial.println("Corpo rilevato");
+#endif
+  digitalWrite(13, 1);
+  delay(1000);
+  digitalWrite(13, 0);
+  delay(500);
+  digitalWrite(13, 1);
+  delay(800);
+  digitalWrite(13, 0);
 }
 
 bool isStraight() {
@@ -58,41 +58,41 @@ void straightens() {
     while (!isStraight());
     mov.stop();
 
-    #ifdef DEBUG
+#ifdef DEBUG
     Serial.println("Robot raddrizzato");
-    #endif
+#endif
   }
-  #ifdef DEBUG
+#ifdef DEBUG
   else Serial.println("Robot già dritto");
-  #endif
+#endif
 }
 
 void drive() {  /// Funzione che guida tutto
   if (mat.keep) {
     mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[US_RIGHT].read(), ultrasonic[US_LEFT].read(), color->read());
-    #ifdef DEBUG
-    Serial.println("Controllo cella: " +  mat.isVisited()? "cella visitata":"");
-    #endif
+#ifdef DEBUG
+    Serial.println("Controllo cella: " +  mat.isVisited() ? "cella visitata" : "");
+#endif
     if (mat.isHot()) victim();
     switch (mat.getDir(ultrasonic[US_RIGHT].read(), ultrasonic[US_FRONTR].read(), ultrasonic[US_LEFT].read())) {
       case 1 :
-        #ifdef DEBUG
+#ifdef DEBUG
         Serial.print("Giro a destra ");
-        #endif
+#endif
         mat.rotate(false);
         mov.rotate();
         break;
       case 3 :
-        #ifdef DEBUG
+#ifdef DEBUG
         Serial.print("Giro a sinistra ");
-        #endif
+#endif
         mat.rotate(true);
         mov.rotate(true);
         break;
       case 4 :
-        #ifdef DEBUG
+#ifdef DEBUG
         Serial.print("Mi giro di 180° ");
-        #endif
+#endif
         for (int i = 0; i < 2; i++) {
           mat.rotate(false);
           mov.rotate();
@@ -103,46 +103,46 @@ void drive() {  /// Funzione che guida tutto
     float dist = ultrasonic[US_FRONTR].read() - 30;
     mat.go();
     mov.go();
-    #ifdef DEBUG
+#ifdef DEBUG
     Serial.println(" e vado avanti");
-    #endif
+#endif
     bool black = false;
     while (ultrasonic[US_FRONTR].read() > dist && !black) {
       Serial.print(dist);
       Serial.print("\t");
       Serial.println(ultrasonic[US_FRONTR].read());
       if (color->read() == 2) {
-        #ifdef DEBUG
+#ifdef DEBUG
         Serial.print("Trovata cella nera ");
-        #endif
+#endif
         mov.stop();
         mat.check(0.0, 0.0, 0.0, 0.0, 2); //Controllo se sono in una casella proibita
         mat.back();
         dist += 30;
         mov.go(true);
         while (ultrasonic[US_FRONTR].read() <= dist);
-        #ifdef DEBUG
+#ifdef DEBUG
         Serial.println("quindi torno indietro");
-        #endif
+#endif
         black = true;
       }
-     // Se rileva salita
-     mov.inclination();
-     if (inclination >= RAMP || inclination <= -RAMP) {
-       #ifdef DEBUG
-       Serial.print("Rampa trovata");
-       #endif
-       mat.back();
-       mat.changeFloor();
-       while (inclination >= RAMP || inclination <= -RAMP) {
-         mov.inclination();
-         delay(50);
-       }
-       dist = ultrasonic[US_FRONTR].read() - 5;
-       #ifdef DEBUG
-       Serial.println(" e completata");
-       #endif
-     }
+      // Se rileva salita
+      mov.inclination();
+      if (inclination >= RAMP || inclination <= -RAMP) {
+#ifdef DEBUG
+        Serial.print("Rampa trovata");
+#endif
+        mat.back();
+        mat.changeFloor();
+        while (inclination >= RAMP || inclination <= -RAMP) {
+          mov.inclination();
+          delay(50);
+        }
+        dist = ultrasonic[US_FRONTR].read() - 5;
+#ifdef DEBUG
+        Serial.println(" e completata");
+#endif
+      }
     }
     mov.stop();
   }
@@ -158,20 +158,20 @@ void pause () {
 void setup() {
   Wire.begin(8);
   Wire.onReceive(receiveEvent);
-  #ifdef DEBUG
+#ifdef DEBUG
   Serial.begin(9600);
-  delay(5000);
   Serial.println("Avvio!");
   Serial.print("Tensione batteria: ");
   Serial.print(batStats());
   Serial.println("V");
-  #endif
+#endif
   color = new Color();
   pinMode(INTERRUPT, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(INTERRUPT), pause, FALLING);
-  straightens();
+  //straightens();
 }
 
 void loop() {
-  drive();
+  //  drive();
+  mov.go();
 }

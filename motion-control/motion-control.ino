@@ -26,7 +26,7 @@ byte requested = 255;
 byte prevState = 255;
 int inclination;
 
-Moviment mov(100, 0, 0);
+Moviment mov(90, 0, 0);
 IMU orientation;
 
 void receiveEvent(int howMany) {
@@ -62,8 +62,8 @@ void goStraight(bool invert) {
   mov.go(invert);
   while (state == 1 || state == 3) {
     direzione = orientation.yaw()-180;
-    if (direzione < 0) mov.setK(-direzione * 2, 0);
-    else if (direzione > 0) mov.setK(0, direzione * 2);
+    if (direzione < 0) mov.setK(20, 0);
+    else if (direzione > 0) mov.setK(0, 20);
     answer();
     mov.go(invert);
   }
