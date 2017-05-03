@@ -6,7 +6,7 @@
 
 #define ADCTOV 0.0149589739 //costante per il calcolo della tensione della batteria dai pin analogici
 #define INTERRUPT 2
-#define DEBUG TRUE
+#define DEBUG FALSE
 #define US_FRONTR 0
 #define US_FRONTL 1
 #define US_RIGHT 2
@@ -108,9 +108,11 @@ void drive() {  /// Funzione che guida tutto
 #endif
     bool black = false;
     while (ultrasonic[US_FRONTR].read() > dist && !black) {
-      Serial.print(dist);
-      Serial.print("\t");
-      Serial.println(ultrasonic[US_FRONTR].read());
+      #ifdef DEBUG
+        Serial.print(dist);
+        Serial.print("\t");
+        Serial.println(ultrasonic[US_FRONTR].read());
+      #endif
       if (color->read() == 2) {
 #ifdef DEBUG
         Serial.print("Trovata cella nera ");
@@ -168,10 +170,9 @@ void setup() {
   color = new Color();
   pinMode(INTERRUPT, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(INTERRUPT), pause, FALLING);
-  //straightens();
+  straightens();
 }
 
 void loop() {
-  //  drive();
-  mov.go();
+   drive();
 }
