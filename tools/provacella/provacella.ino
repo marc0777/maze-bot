@@ -1,7 +1,7 @@
 #include <DistanceUS.h>
 #include <Motion.h>
 
-#define DISTWALL 7
+#define DISTWALL 24
 #define TOLL 1
 DistanceUS dist(40, 42);
 
@@ -17,13 +17,20 @@ void receiveEvent(int howMany) {
 }
 
 void setup() {
-  Serial.begin(9600);
   Wire.begin(8);
-  Wire.onReceive(receiveEvent);
+  Wire.onReceive(receiveEvent);  
+  mov.go();
 }
 
 void loop() {
-  short resto = (int)dist.read() % 30;
-  if(resto > DISTWALL - TOLL && resto < DISTWALL + TOLL) Serial.println("STAMPO");
+  short resto = ((int)dist.read()) % 30;
+  if ((resto > DISTWALL - TOLL) && (resto < DISTWALL + TOLL)) {
+    mov.stop();
+    delay(2000);
+    mov.go();
+    do {
+      resto = ((int)dist.read()) % 30;
+    } while ((resto < DISTWALL + TOLL));
+  }
 }
 
