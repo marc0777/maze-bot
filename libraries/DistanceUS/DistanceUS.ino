@@ -22,6 +22,8 @@ void loop() {
   Serial.print(us3.read());
   Serial.print("\t");
   Serial.print(" Left: ");
-  Serial.println(us4.read());
+  Serial.print(us4.read());
+  Serial.print(" Differenza: ");
+  Serial.println(us1.read()-us2.read());
   delay(500);
 }
