@@ -3,6 +3,8 @@
 #include <IMU.h>
 #include <PID.h>
 
+//#define CORRECTION false
+
 #define MASTER_ADDRESS 8
 #define ADDRESS 7
 #define OUT_MIN 100
@@ -26,7 +28,7 @@ byte requested = 255;
 byte prevState = 255;
 int inclination;
 
-Moviment mov(90, 0, 0);
+Moviment mov(60);
 IMU orientation;
 
 void receiveEvent(int howMany) {
@@ -42,6 +44,11 @@ void send(byte data, byte address) {
   Wire.endTransmission();
 }
 
+void start() {
+  orientation.start();
+  for(int i = 0; i < 10; i++) orientation.yaw();  
+}
+
 void answer() {
   if (requested!=255) {
     inclination=orientation.pitch();
@@ -52,25 +59,25 @@ void answer() {
 
 void rotationSpeed(bool direction , float endRotation) {
   direzione = orientation.yaw();
-  if (direction) mov.setK(40 + ((endRotation - direzione)*2), 60 + ((endRotation - direzione)*2));
-  else mov.setK(60 + ((direzione - endRotation)*2), 40 + ((direzione - endRotation)*2));
+  if (direction) mov.setK(25+((endRotation - direzione)*2), 40+((endRotation - direzione)*2));
+  else mov.setK(40+((direzione - endRotation)*2), 25+((direzione - endRotation)*2));
   mov.rotate(direction);
 }// negare la condizione se il filtro funziona in modo diverso
 
 void goStraight(bool invert) {
-  orientation.start();
+  start();
   mov.go(invert);
   while (state == 1 || state == 3) {
     direzione = orientation.yaw()-180;
-    if (direzione < 0) mov.setK(0, direzione*20);
-    else if (direzione > 0) mov.setK(-direzione*20, 0);
+    if (direzione < 0) mov.setK(0, 10);
+    else if (direzione > 0) mov.setK(10, 0);
     answer();
     mov.go(invert);
   }
 }
 
 void goStraightPID(bool invert) {
-  orientation.start();
+  start();
   mov.go(invert);
   while (state == 1 || state == 3) {
     direzione = orientation.yaw();
@@ -84,11 +91,17 @@ void goStraightPID(bool invert) {
 }
 
 void turn(bool invert) {
-  orientation.start();
+  start();
   mov.rotate(invert);
   float end = endAngle(orientation.yaw(), invert);
-  if (invert) while(orientation.yaw()<end) rotationSpeed(invert,end);
-  else while(orientation.yaw()>end) rotationSpeed(invert,end);
+  if (invert) {
+    while(orientation.yaw()<end) rotationSpeed(invert,end);
+    while(orientation.yaw()>end) rotationSpeed(!invert,end);
+  }
+  else {
+    while(orientation.yaw()>end) rotationSpeed(invert,end);
+    while(orientation.yaw()<end) rotationSpeed(!invert,end);
+  }
   mov.setK(0,0);
   mov.stop();
   state=9;
@@ -97,11 +110,11 @@ void turn(bool invert) {
 
 float endAngle(float angle, bool invert) {
   if (invert) {
-    angle += 85;
+    angle += 90;
     return (angle > 360) ? angle - 360 : angle;
   }
   else {
-    angle -= 85;
+    angle -= 90;
     return (angle < 0) ? angle + 360 : angle;
   }
 }
@@ -113,7 +126,7 @@ void setup() {
   delay(100);
   orientation.calibrate();
   delay(100);
-  orientation.start();
+  start();
   pid.SetOutputLimits(OUT_MIN, OUT_MAX);
 }
 
@@ -124,13 +137,21 @@ void loop() {
       mov.stop();
       break;
     case 1:
+//      #ifdef CORRECTION
+   //   mov.go(false);
+//      #else
       goStraight(false);
+//      #endif
       break;
     case 2:
       turn(false);
       break;
     case 3:
+//      #ifdef CORRECTION
+ //     mov.go(true);
+  //    #else
       goStraight(true);
+ //     #endif
       break;
     case 4:
       turn(true);

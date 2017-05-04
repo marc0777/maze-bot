@@ -1,9 +1,7 @@
 #include "Moviment.h"
 
-Moviment::Moviment (byte velocity, byte rightK, byte leftK) {
+Moviment::Moviment (byte velocity) {
   speed = velocity;
-  kR = rightK;
-  kL = leftK;
 }
 
 void Moviment::go() {
@@ -39,7 +37,7 @@ void Moviment::setSpeed(byte velocity) {
   speed = velocity;
 }
 
-void Moviment::setK(byte rightK, byte leftK) {
+void Moviment::setK(int rightK, int leftK) {
   kR = rightK;
   kL = leftK;
 }

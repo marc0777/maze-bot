@@ -18,14 +18,14 @@
 
 class Moviment {
   public:
-    Moviment (byte speed, byte rightK, byte leftK);
+    Moviment (byte speed);
     void go();
     void go (bool invert);
     void rotate();
     void rotate (bool invert);
     void stop();
     void setSpeed(byte speed);
-    void setK(byte rightK, byte leftK);
+    void setK(int rightK, int leftK);
   private:
     short bound (short n, short max);
     Motor motorFR = Motor(FL_EN, FL_IN1, FL_IN2);
@@ -33,7 +33,7 @@ class Moviment {
     Motor motorRR = Motor(RL_EN, RL_IN1, RL_IN2);
     Motor motorRL = Motor(RR_EN, RR_IN1, RR_IN2);
     byte speed;
-    byte kR;
-    byte kL;
+    int kR;
+    int kL;
 };
 #endif

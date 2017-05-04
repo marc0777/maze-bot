@@ -18,16 +18,9 @@ Motor::Motor(byte e, byte i1, byte i2) {
    @brief metodo che muove di un 'passo' una coppia di motori
 */
 void Motor::start(byte power, bool inverse) {
-  if (inverse) {
     analogWrite(enable, power);
-    digitalWrite(inverter1, LOW);
-    digitalWrite(inverter2, HIGH);
-  }
-  else {
-    analogWrite(enable, power);
-    digitalWrite(inverter1, HIGH);
-    digitalWrite(inverter2, LOW);
-  }
+    digitalWrite(inverter1, !inverse);
+    digitalWrite(inverter2, inverse);
 }
 
 void Motor::stop() {

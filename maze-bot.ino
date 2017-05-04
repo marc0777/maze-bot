@@ -8,12 +8,14 @@
 
 #define ADCTOV 0.0149589739 //costante per il calcolo della tensione della batteria dai pin analogici
 #define INTERRUPT 2
-#define DEBUG TRUE
+#define DEBUG FALSE
 #define US_FRONTR 0
 #define US_FRONTL 1
 #define US_RIGHT 2
 #define US_LEFT 3
 #define RAMP 20
+#define CERROR 5
+#define DIST_ERR 5
 
 int inclination;
 bool turning = false;
@@ -61,9 +63,9 @@ bool isStraight() {
   return (abs(ultrasonic[US_FRONTR].read() - ultrasonic[US_FRONTL].read())) < 1;
 }
 
-void straightens() {
+void straightens(bool invert) {
   if (!isStraight()) {
-    mov.rotate(true, true);
+    mov.rotate(invert, true);
     while (!isStraight());
     mov.stop();
 
@@ -110,13 +112,14 @@ void drive() {  /// Funzione che guida tutto
     }
     mov.stop();
     float dist = ultrasonic[US_FRONTR].read() - 30;
+    if(dist < 6) dist = 6;
     mat.go();
     mov.go();
 #ifdef DEBUG
     Serial.println(" e vado avanti");
 #endif
     bool black = false;
-    while (ultrasonic[US_FRONTR].read() > dist && !black) {
+    while (ultrasonic[US_FRONTR].read() > dist + DIST_ERR && !black) {
       #ifdef DEBUG
         Serial.print(dist);
         Serial.print("\t");
@@ -171,6 +174,7 @@ void setup() {
   Wire.onReceive(receiveEvent);
 #ifdef DEBUG
   Serial.begin(9600);
+  delay(5000);
   Serial.println("Avvio!");
   Serial.print("Tensione batteria: ");
   Serial.print(batStats());
@@ -179,12 +183,15 @@ void setup() {
   color = new Color();
   pinMode(INTERRUPT, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(INTERRUPT), pause, FALLING);
-  straightens();
 }
 
 void loop() {
    drive();
    #ifdef DEBUG
    delay(2000);
+   Serial.println("Avanti uomo!!!");
    #endif
+//   mov.rotate(false);
+//   delay(2000);
+//   mov.stop();
 }
