@@ -3,6 +3,8 @@
 #include <Temperature.h>
 #include <DistanceUS.h>
 #include <Motion.h>
+#include <Ejector.h>
+#include <RGB.h>
 
 #define ADCTOV 0.0149589739 //costante per il calcolo della tensione della batteria dai pin analogici
 #define INTERRUPT 2
@@ -19,6 +21,8 @@ bool turning = false;
 Motion mov(&turning); // tutti i mov.back() sono stati sostituiti da mov.go(true);
 Matrix mat; // Matrice che rappresenta il maze
 Color *color; // Sensore di colore
+RGB led(11,13,12);
+Ejector caga(6);
 Temperature temps[2] = {Temperature(0x5B), Temperature(0x5A)}; // Sensori temperatura 5B sinistra, 5A destra
 DistanceUS ultrasonic[4] = {DistanceUS(40, 42), DistanceUS(36, 38), DistanceUS(32, 34),
                             DistanceUS(28, 30)
@@ -34,18 +38,23 @@ float batStats() {
   return analogRead(A0) * ADCTOV;
 }
 
-//TODO accendere led RGB
+void blink() {
+  led.set(0,0,255);
+  delay(200);
+  led.set(0,0,0);
+  delay(200);
+  led.set(255,0,0);
+  delay(200);
+  led.set(0,0,0);
+  delay(200);  
+}
+
 void victim() {
 #ifdef DEBUG
   Serial.println("Corpo rilevato");
 #endif
-  digitalWrite(13, 1);
-  delay(1000);
-  digitalWrite(13, 0);
-  delay(500);
-  digitalWrite(13, 1);
-  delay(800);
-  digitalWrite(13, 0);
+  for(int i = 0; i<2; i++) blink();
+  caga.eject();
 }
 
 bool isStraight() {

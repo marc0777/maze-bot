@@ -1,10 +1,24 @@
 #include "RGB.h"
-RGB led(9,10,11);
+RGB led(11,13,12);
 
-void setup(){}
+void blink() {
+  led.set(0,0,255);
+  delay(200);
+  led.set(0,0,0);
+  delay(200);
+  led.set(255,0,0);
+  delay(200);
+  led.set(0,0,0);
+  delay(200);  
+}
+
+void setup(){
+  
+}
 
 void loop() {
-  led.crossFade();
+  for(int i = 0; i<2; i++) blink(); 
+  delay(2000);
 }
 
 

@@ -3,9 +3,8 @@
 
 #include <Arduino.h>
 
-#define PIN1 3
-#define PIN2 5
-#define ENABLE 8
+#define PIN1 6
+#define PIN2 7
 
 #define DELAY 869.56
 #define MINDEL 200
