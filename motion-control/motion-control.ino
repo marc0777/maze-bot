@@ -62,8 +62,8 @@ void goStraight(bool invert) {
   mov.go(invert);
   while (state == 1 || state == 3) {
     direzione = orientation.yaw()-180;
-    if (direzione < 0) mov.setK(20, 0);
-    else if (direzione > 0) mov.setK(0, 20);
+    if (direzione < 0) mov.setK(0, direzione*20);
+    else if (direzione > 0) mov.setK(-direzione*20, 0);
     answer();
     mov.go(invert);
   }

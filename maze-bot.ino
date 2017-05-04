@@ -6,7 +6,7 @@
 
 #define ADCTOV 0.0149589739 //costante per il calcolo della tensione della batteria dai pin analogici
 #define INTERRUPT 2
-#define DEBUG FALSE
+#define DEBUG TRUE
 #define US_FRONTR 0
 #define US_FRONTL 1
 #define US_RIGHT 2
@@ -175,4 +175,7 @@ void setup() {
 
 void loop() {
    drive();
+   #ifdef DEBUG
+   delay(2000);
+   #endif
 }
