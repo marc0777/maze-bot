@@ -8,7 +8,7 @@
 
 #define ADCTOV 0.0149589739 //costante per il calcolo della tensione della batteria dai pin analogici
 #define INTERRUPT 2
-#define DEBUG FALSE
+#define DEBUG TRUE
 #define US_FRONTR 0
 #define US_FRONTL 1
 #define US_RIGHT 2
@@ -26,8 +26,8 @@ Color *color; // Sensore di colore
 RGB led(11,13,12);
 Ejector caga(6);
 Temperature temps[2] = {Temperature(0x5B), Temperature(0x5A)}; // Sensori temperatura 5B sinistra, 5A destra
-DistanceUS ultrasonic[4] = {DistanceUS(40, 42), DistanceUS(36, 38), DistanceUS(32, 34),
-                            DistanceUS(28, 30)
+DistanceUS ultrasonic[4] = {DistanceUS(40, 42,5,93), DistanceUS(36, 38,5,93), DistanceUS(32, 34,5,93),
+                            DistanceUS(28, 30,5,93)
                            };
 
 void receiveEvent(int howMany) {
@@ -189,9 +189,5 @@ void loop() {
    drive();
    #ifdef DEBUG
    delay(2000);
-   Serial.println("Avanti uomo!!!");
    #endif
-//   mov.rotate(false);
-//   delay(2000);
-//   mov.stop();
 }

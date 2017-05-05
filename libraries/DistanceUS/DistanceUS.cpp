@@ -1,6 +1,6 @@
 #include "DistanceUS.h"
 
-DistanceUS::DistanceUS(int trigPin, int echoPin) {
+DistanceUS::DistanceUS(byte trigPin, byte echoPin, byte average, byte tolerance) {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   this->trigPin = trigPin;

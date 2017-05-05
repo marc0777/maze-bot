@@ -44,3 +44,7 @@ float IMU::roll() {
   return filter.getRoll();
 }
 
+float IMU::getAcc(){
+	return acc.x;
+}
+

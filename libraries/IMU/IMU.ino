@@ -18,6 +18,9 @@ void loop() {
   Serial.print("\tPitch: ");
   Serial.print(orientation.pitch());
   Serial.print("\tRoll: ");
-  Serial.println(orientation.roll());
+  Serial.print(orientation.roll());
+  Serial.print("\tAcc: ");
+  Serial.println(orientation.getAcc());
+  delay(3000);
 }
 

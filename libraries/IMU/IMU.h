@@ -16,6 +16,7 @@ class IMU {
     float yaw();
     float pitch();
     float roll();
+	float getAcc();
   private:
     void update();
     L3G4200D gyroscope;
