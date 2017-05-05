@@ -14,8 +14,10 @@
 #define US_RIGHT 2
 #define US_LEFT 3
 #define RAMP 20
-#define CERROR 5
 #define DIST_ERR 5
+// Pins for wall crash recognition
+#define BTNL 14
+#define BTNR 15
 
 int inclination;
 bool turning = false;
@@ -78,6 +80,10 @@ void straightens(bool invert) {
 #endif
 }
 
+bool isCrashed() {
+  return digitalRead(BTNL) && digitalRead(BTNR);
+}
+
 void drive() {  /// Funzione che guida tutto
   if (mat.keep) {
     mat.check(temps[1].readObj() - temps[1].readAmb(), temps[0].readObj() - temps[0].readAmb(), ultrasonic[US_RIGHT].read(), ultrasonic[US_LEFT].read(), color->read());
@@ -119,7 +125,7 @@ void drive() {  /// Funzione che guida tutto
     Serial.println(" e vado avanti");
 #endif
     bool black = false;
-    while (ultrasonic[US_FRONTR].read() > dist + DIST_ERR && !black) {
+    while (ultrasonic[US_FRONTR].read() > dist + DIST_ERR && !black && !isCrashed()) {
       #ifdef DEBUG
         Serial.print(dist);
         Serial.print("\t");
@@ -134,7 +140,7 @@ void drive() {  /// Funzione che guida tutto
         mat.back();
         dist += 30;
         mov.go(true);
-        while (ultrasonic[US_FRONTR].read() <= dist);
+        while (ultrasonic[US_FRONTR].read() <= dist - DIST_ERR);
 #ifdef DEBUG
         Serial.println("quindi torno indietro");
 #endif
@@ -183,6 +189,9 @@ void setup() {
   color = new Color();
   pinMode(INTERRUPT, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(INTERRUPT), pause, FALLING);
+  // Set pins for wall crash recognition
+  pinMode(BTNL, INPUT_PULLUP);
+  pinMode(BTNR, INPUT_PULLUP);
 }
 
 void loop() {
