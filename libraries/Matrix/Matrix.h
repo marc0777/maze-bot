@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include "Cell.h"
 
-#define DELTATEMP 10 // Delta minima di temperatorua perchè la parete sia calda
+#define DELTATEMP 7 // Delta minima di temperatorua perchè la parete sia calda
 #define DISTWALL 18 // Distanza massima del robot dal muro vicino
 #define NCELLS 36 // Numero totale di celle nel maze
 
@@ -27,7 +27,7 @@ public:
     /* Move the cursor in the cell behind the robot */
     void back();
     /* Returns the best direction */
-    byte getDir(float dx, float front, float sx); // Ritorns 1 for indicate the rigth, 2 for the front, 3 for the left, 4 for the black
+    byte getDir(float dx, float front, float sx, bool crash); // Ritorns 1 for indicate the rigth, 2 for the front, 3 for the left, 4 for the black
     /* Rotate the matrix cursor */
     void rotate(bool direction);
     /* Returns true if the current cell is hot */

@@ -21,6 +21,5 @@ void loop() {
   Serial.print(orientation.roll());
   Serial.print("\tAcc: ");
   Serial.println(orientation.getAcc());
-  delay(3000);
 }
 

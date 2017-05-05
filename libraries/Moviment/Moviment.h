@@ -32,6 +32,7 @@ class Moviment {
     Motor motorFL = Motor(FR_EN, FR_IN1, FR_IN2);
     Motor motorRR = Motor(RL_EN, RL_IN1, RL_IN2);
     Motor motorRL = Motor(RR_EN, RR_IN1, RR_IN2);
+	byte state;
     byte speed;
     int kR;
     int kL;

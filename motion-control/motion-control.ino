@@ -28,7 +28,7 @@ byte requested = 255;
 byte prevState = 255;
 int inclination;
 
-Moviment mov(60);
+Moviment mov(65);
 IMU orientation;
 
 void receiveEvent(int howMany) {
@@ -44,10 +44,6 @@ void send(byte data, byte address) {
   Wire.endTransmission();
 }
 
-void start() {
-  orientation.start();
-  for(int i = 0; i < 10; i++) orientation.yaw();  
-}
 
 void answer() {
   if (requested!=255) {
@@ -59,13 +55,13 @@ void answer() {
 
 void rotationSpeed(bool direction , float endRotation) {
   direzione = orientation.yaw();
-  if (direction) mov.setK(25+((endRotation - direzione)*2), 40+((endRotation - direzione)*2));
-  else mov.setK(40+((direzione - endRotation)*2), 25+((direzione - endRotation)*2));
+  if (endRotation-direzione>0) mov.setK(40+((endRotation - direzione)*2), 60+((endRotation - direzione)*2));
+  else mov.setK(60+((direzione - endRotation)*2), 40+((direzione - endRotation)*2));
   mov.rotate(direction);
 }// negare la condizione se il filtro funziona in modo diverso
 
 void goStraight(bool invert) {
-  start();
+  orientation.start();
   mov.go(invert);
   while (state == 1 || state == 3) {
     direzione = orientation.yaw()-180;
@@ -76,30 +72,18 @@ void goStraight(bool invert) {
   }
 }
 
-void goStraightPID(bool invert) {
-  start();
-  mov.go(invert);
-  while (state == 1 || state == 3) {
-    direzione = orientation.yaw();
-    inputPID = direzione;
-    pid.Compute();
-    if (direzione < 0) mov.setK(outputPID, -outputPID);
-    else if (direzione > 0) mov.setK(-outputPID, outputPID);
-    answer();
-    mov.go(invert);
-  }
-}
-
 void turn(bool invert) {
-  start();
+  orientation.start();
   mov.rotate(invert);
   float end = endAngle(orientation.yaw(), invert);
   if (invert) {
     while(orientation.yaw()<end) rotationSpeed(invert,end);
+    mov.stop();
     while(orientation.yaw()>end) rotationSpeed(!invert,end);
   }
   else {
     while(orientation.yaw()>end) rotationSpeed(invert,end);
+    mov.stop();
     while(orientation.yaw()<end) rotationSpeed(!invert,end);
   }
   mov.setK(0,0);
@@ -126,7 +110,7 @@ void setup() {
   delay(100);
   orientation.calibrate();
   delay(100);
-  start();
+  orientation.start();
   pid.SetOutputLimits(OUT_MIN, OUT_MAX);
 }
 

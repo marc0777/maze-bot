@@ -46,7 +46,8 @@ void Motion::setSpeed(byte speed) {
 }
 
 void Motion::send(byte data, byte address) {
+  do {
   Wire.beginTransmission(address);
-  Wire.write(data);
-  Wire.endTransmission();
+  Wire.write(data);;
+  } while(Wire.endTransmission()!=0);
 }

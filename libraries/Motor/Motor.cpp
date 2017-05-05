@@ -17,10 +17,15 @@ Motor::Motor(byte e, byte i1, byte i2) {
 /*
    @brief metodo che muove di un 'passo' una coppia di motori
 */
-void Motor::start(byte power, bool inverse) {
-    analogWrite(enable, power);
+void Motor::start(byte speed, bool inverse) {
+	this->inverse=inverse;
+    analogWrite(enable, speed);
     digitalWrite(inverter1, !inverse);
     digitalWrite(inverter2, inverse);
+}
+
+void Motor::setSpeed(byte speed) {
+	start(speed, inverse);
 }
 
 void Motor::stop() {

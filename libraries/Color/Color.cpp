@@ -24,7 +24,7 @@ byte Color::read(){ //@return 0 se sotto non c'è niente, 1 se c'è uno specchio
     // Reading the output frequency
     int R = pulseIn(sensorOut, LOW);
 
-    color =  R < 50 ? 0 : 2;
+    color =  R < 15 ? 0 : 2;
   }
   return color;
 }

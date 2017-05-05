@@ -87,7 +87,7 @@ void Matrix::back() {
   }
 }
 
-byte Matrix::getDir(float dx, float front, float sx) { // 1 = rigth, 2 = front, 3 = left, 4 = back
+byte Matrix::getDir(float dx, float front, float sx, bool crash) { // 1 = rigth, 2 = front, 3 = left, 4 = back
   byte saved_dir = dir;
   byte pdir = 4;
   rotate(false);
@@ -95,7 +95,7 @@ byte Matrix::getDir(float dx, float front, float sx) { // 1 = rigth, 2 = front, 
     pdir = 1;
   } else {
     rotate(true);
-    if (!frontCheck() && !frontBlack() && front > DISTWALL) {
+    if (!frontCheck() && !frontBlack() && !crash && front > DISTWALL) {
       pdir = 2;
     } else {
       rotate(true);
@@ -109,7 +109,7 @@ byte Matrix::getDir(float dx, float front, float sx) { // 1 = rigth, 2 = front, 
           pdir = 1;
         } else {
           rotate(true);
-          if (!frontBlack() && front > DISTWALL) {
+          if (!frontBlack() && !crash && front > DISTWALL) {
             pdir = 2;
           } else {
             rotate(true);
