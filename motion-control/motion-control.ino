@@ -1,7 +1,7 @@
 #include <Wire.h>
-#include <Moviment.h>
-#include <IMU.h>
-#include <PID.h>
+#include "libraries\Moviment\Moviment.h"
+#include "libraries\IMU\IMU.h"
+#include "libraries\PID\PID.h"
 
 //#define CORRECTION false
 
