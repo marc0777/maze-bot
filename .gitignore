@@ -1,3 +1,5 @@
-libraries/Matrix/Trial/.idea/**
-libraries/Matrix/Trial/cmake-build-debug/**
-libraries/Matrix/Trial/CMakeLists.txt
+main/libraries/Matrix/Trial/.idea/**
+main/libraries/Matrix/Trial/cmake-build-debug/**
+main/libraries/Matrix/Trial/CMakeLists.txt
+main/.vscode/**
+motion-control/.vscode/**
